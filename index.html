@@ -18,6 +18,22 @@
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+	<!-- Inline theme initialization script to prevent FOUC (Flash of Unstyled Content) -->
+	<script>
+		(function () {
+			// Check for saved theme preference or use device preference
+			const savedTheme = localStorage.getItem('theme');
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+			// Set initial theme immediately before page renders
+			if (savedTheme) {
+				document.documentElement.setAttribute('data-theme', savedTheme);
+			} else if (prefersDark) {
+				document.documentElement.setAttribute('data-theme', 'dark');
+			}
+		})();
+	</script>
 </head>
 
 <body>
@@ -153,7 +169,7 @@
 		<i class="fas fa-moon"></i>
 	</button>
 
-	<!-- Script to load blog posts -->
+	<!-- Theme toggle script -->
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
 			// Manually defined blog posts
@@ -171,6 +187,7 @@
 			// Function to display blog posts
 			function displayBlogPosts() {
 				const blogPostsContainer = document.getElementById('blog-posts');
+				if (!blogPostsContainer) return;
 
 				// Clear loading message
 				blogPostsContainer.innerHTML = '';
@@ -217,22 +234,12 @@
 			const htmlElement = document.documentElement;
 			const themeIcon = themeToggle.querySelector('i');
 
-			// Check for saved theme preference or use device preference
-			const savedTheme = localStorage.getItem('theme');
-			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-			// Set initial theme
-			if (savedTheme) {
-				htmlElement.setAttribute('data-theme', savedTheme);
-				updateThemeIcon(savedTheme);
-			} else if (prefersDark) {
-				htmlElement.setAttribute('data-theme', 'dark');
-				updateThemeIcon('dark');
-			}
+			// Set initial icon based on current theme
+			updateThemeIcon(htmlElement.getAttribute('data-theme') || 'light');
 
 			// Toggle theme when button is clicked
 			themeToggle.addEventListener('click', () => {
-				const currentTheme = htmlElement.getAttribute('data-theme');
+				const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
 				const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
 				htmlElement.setAttribute('data-theme', newTheme);
