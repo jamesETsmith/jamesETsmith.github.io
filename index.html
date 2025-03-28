@@ -4,7 +4,7 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html lang="en" data-theme="light">
 
 <head>
 	<title>James E. T. Smith, Ph.D.</title>
@@ -31,6 +31,7 @@
 							<li><a href="#about">About</a></li>
 							<li><a href="#software">Software</a></li>
 							<li><a href="publications.html">Publications</a></li>
+							<li><a href="#blog">Blog</a></li>
 							<li><a href="#talks">Talks</a></li>
 							<li><a href="#contact">Contact</a></li>
 						</ul>
@@ -61,7 +62,7 @@
 					developing more efficient and robust algorithms for quantum chemistry. For a detailed
 					description
 					of my experience and publications please see my <a
-						href="resume/pdf/james_smith_resume.pdf">resume</a>.
+						href="resume_typst/james_smith_resume.pdf">resume</a>.
 				</p>
 
 				<div class="social-links">
@@ -103,6 +104,20 @@
 				</div>
 			</section>
 
+			<section id="blog">
+				<h2>Blog</h2>
+				<p>Thoughts and tutorials on scientific computing, quantum chemistry, and software development.</p>
+
+				<div id="blog-posts" class="blog-posts">
+					<!-- Blog posts will be loaded here dynamically -->
+					<div class="loading">Loading blog posts...</div>
+				</div>
+
+				<div class="all-posts">
+					<a href="blog.html" class="button">All Blog Posts</a>
+				</div>
+			</section>
+
 			<section id="talks">
 				<h2>Talks</h2>
 				<ul class="talks-list">
@@ -132,6 +147,111 @@
 			<p>&copy; James E. T. Smith, Ph.D.</p>
 		</footer>
 	</div>
+
+	<!-- Theme toggle button -->
+	<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+		<i class="fas fa-moon"></i>
+	</button>
+
+	<!-- Script to load blog posts -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			// Manually defined blog posts
+			const blogPosts = [
+				{
+					title: "Embedding Visualization in HTML",
+					date: "2023-01-16",
+					url: "blog_posts/2023_01_16.html",
+					excerpt: "This post is a collection of different things I've wanted to try embedding in HTML including Compiler Explorer and Jupyterlite.",
+					tags: ["HTML", "Visualization", "JavaScript"]
+				}
+				// Add more blog posts here as you create them
+			];
+
+			// Function to display blog posts
+			function displayBlogPosts() {
+				const blogPostsContainer = document.getElementById('blog-posts');
+
+				// Clear loading message
+				blogPostsContainer.innerHTML = '';
+
+				// Sort by date (newest first)
+				blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+				// Display up to 3 most recent posts
+				const recentPosts = blogPosts.slice(0, 3);
+
+				if (recentPosts.length === 0) {
+					blogPostsContainer.innerHTML = '<p>No blog posts found.</p>';
+					return;
+				}
+
+				// Create HTML for each post
+				recentPosts.forEach(post => {
+					const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric'
+					});
+
+					const postElement = document.createElement('div');
+					postElement.className = 'blog-post';
+					postElement.innerHTML = `
+						<div class="post-date">${formattedDate}</div>
+						<h3><a href="${post.url}">${post.title}</a></h3>
+						<p class="post-excerpt">${post.excerpt}</p>
+						<div class="post-tags">
+							${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+						</div>
+					`;
+
+					blogPostsContainer.appendChild(postElement);
+				});
+			}
+
+			// Display blog posts
+			displayBlogPosts();
+
+			// Theme toggle functionality
+			const themeToggle = document.getElementById('theme-toggle');
+			const htmlElement = document.documentElement;
+			const themeIcon = themeToggle.querySelector('i');
+
+			// Check for saved theme preference or use device preference
+			const savedTheme = localStorage.getItem('theme');
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+			// Set initial theme
+			if (savedTheme) {
+				htmlElement.setAttribute('data-theme', savedTheme);
+				updateThemeIcon(savedTheme);
+			} else if (prefersDark) {
+				htmlElement.setAttribute('data-theme', 'dark');
+				updateThemeIcon('dark');
+			}
+
+			// Toggle theme when button is clicked
+			themeToggle.addEventListener('click', () => {
+				const currentTheme = htmlElement.getAttribute('data-theme');
+				const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+				htmlElement.setAttribute('data-theme', newTheme);
+				localStorage.setItem('theme', newTheme);
+				updateThemeIcon(newTheme);
+			});
+
+			// Update icon based on current theme
+			function updateThemeIcon(theme) {
+				if (theme === 'dark') {
+					themeIcon.classList.remove('fa-moon');
+					themeIcon.classList.add('fa-sun');
+				} else {
+					themeIcon.classList.remove('fa-sun');
+					themeIcon.classList.add('fa-moon');
+				}
+			}
+		});
+	</script>
 </body>
 
 </html>

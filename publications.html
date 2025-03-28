@@ -4,7 +4,7 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html lang="en" data-theme="light">
 
 <head>
 	<title>Publications - James E. T. Smith, Ph.D.</title>
@@ -221,6 +221,55 @@
 			<p>&copy; James E. T. Smith, Ph.D.</p>
 		</footer>
 	</div>
+
+	<!-- Theme toggle button -->
+	<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+		<i class="fas fa-moon"></i>
+	</button>
+
+	<!-- Theme toggle script -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			// Theme toggle functionality
+			const themeToggle = document.getElementById('theme-toggle');
+			const htmlElement = document.documentElement;
+			const themeIcon = themeToggle.querySelector('i');
+
+			// Check for saved theme preference or use device preference
+			const savedTheme = localStorage.getItem('theme');
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+			// Set initial theme
+			if (savedTheme) {
+				htmlElement.setAttribute('data-theme', savedTheme);
+				updateThemeIcon(savedTheme);
+			} else if (prefersDark) {
+				htmlElement.setAttribute('data-theme', 'dark');
+				updateThemeIcon('dark');
+			}
+
+			// Toggle theme when button is clicked
+			themeToggle.addEventListener('click', () => {
+				const currentTheme = htmlElement.getAttribute('data-theme');
+				const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+				htmlElement.setAttribute('data-theme', newTheme);
+				localStorage.setItem('theme', newTheme);
+				updateThemeIcon(newTheme);
+			});
+
+			// Update icon based on current theme
+			function updateThemeIcon(theme) {
+				if (theme === 'dark') {
+					themeIcon.classList.remove('fa-moon');
+					themeIcon.classList.add('fa-sun');
+				} else {
+					themeIcon.classList.remove('fa-sun');
+					themeIcon.classList.add('fa-moon');
+				}
+			}
+		});
+	</script>
 </body>
 
 </html>
