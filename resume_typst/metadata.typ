@@ -12,7 +12,7 @@
   linkedin: "james-smith-ph-d-8525792b",
   //custom-1: (icon: "", text: "example", link: "https://example.com"),
   //gitlab: "mintyfrankie",
-  homepage: "https://jamesetsmith.github.io/",
+  homepage: "jamesetsmith.github.io/",
   // orcid: "0000-0002-5130-8633",
   //researchgate: "John-Doe",
   //extraInfo: "",

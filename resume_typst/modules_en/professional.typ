@@ -3,7 +3,7 @@
 #cvSection("Professional Experience")
 
 #cvEntry(
-  title: [Director of HPC Engineering],
+  title: [Senior Research Engineer],
   society: [Qognitive Inc.],
   logo: "",
   date:[Jan. 2024-Present],
