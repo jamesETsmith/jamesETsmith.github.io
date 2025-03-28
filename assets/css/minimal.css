@@ -1,0 +1,292 @@
+/* Base styles */
+:root {
+  --text-color: #333;
+  --background-color: #fff;
+  --link-color: #0366d6;
+  --link-hover-color: #024ea4;
+  --border-color: #eaeaea;
+  --heading-color: #111;
+  --max-width: 800px;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  padding: 0 1rem;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Header and Navigation */
+header {
+  margin-bottom: 3rem;
+}
+
+nav {
+  margin-top: 1rem;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+nav li {
+  font-size: 1rem;
+}
+
+/* Sections */
+section {
+  margin-bottom: 4rem;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.social-links a {
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+.social-links a:hover {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+/* Projects */
+.projects {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.project {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.project:last-child {
+  border-bottom: none;
+}
+
+/* Talks */
+.talks-list {
+  list-style: none;
+  margin-top: 1.5rem;
+}
+
+.talks-list li {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.talks-list li:last-child {
+  border-bottom: none;
+}
+
+/* Buttons */
+.button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: var(--link-color);
+  color: white;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: var(--link-hover-color);
+  text-decoration: none;
+  color: white;
+}
+
+.resume-link {
+  margin-top: 1.5rem;
+}
+
+/* Footer */
+footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+/* Publications page */
+.publication-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.filter-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.filter-btn.active {
+  background-color: var(--link-color);
+  color: white;
+  border-color: var(--link-color);
+}
+
+.publications-list {
+  padding-left: 2rem;
+  margin-bottom: 2rem;
+}
+
+.publications-list li {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.publications-list li:last-child {
+  border-bottom: none;
+}
+
+.publications-list b {
+  font-weight: 600;
+}
+
+.publications-list i {
+  font-style: italic;
+}
+
+.pub-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.pub-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.pub-link i {
+  font-size: 0.8rem;
+}
+
+.all-publications {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .projects {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .publication-item {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .pub-year {
+    flex: 0 0 80px;
+    text-align: right;
+    margin-top: 0.25rem;
+  }
+
+  .pub-content {
+    flex: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  nav ul {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
