@@ -9,6 +9,8 @@
   date:[Jan. 2024-Present],
   location: [New York, NY],
   description: list(
+    [Engineering team lead after the departure of the CTO. Managed a team of 5 engineers across Machine Learning Engineering, Infrastructure, and Research.],
+    [Managed the interview pipeline for two Applied Machine Learning Engineer positions, interviewed 25+ candidates, and hired 2 new engineers.],
     [Team leader for collaboration with IBM's Quantum Computing team. Worked alongside their research team to deploy our models on their quantum hardware and develop new model architectures to improve efficiency on their hardware.],
     [Lead developer for our open-source C++/Python project fast-pauli, which provides high-performance primitives for simulating Pauli-based quantum circuits.],
     [Worked between the machine learning research team and the infrastructure team to scale machine learning models from prototype to production],
