@@ -41,7 +41,7 @@
         <main>
             <section id="blog">
                 <h2>Blog</h2>
-                <p>Thoughts and tutorials on scientific computing, quantum chemistry, and software development.</p>
+                <p>Ramblings and half-baked thoughts on scientific computing, quantum chemistry, and software development.</p>
 
                 <div class="blog-filters">
                     <div class="search-container">
@@ -72,17 +72,28 @@
     <!-- Script to load blog posts and handle theme toggle -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Manually defined blog posts
-            const blogPosts = [
-                {
-                    title: "Embedding Visualization in HTML",
-                    date: "2023-01-16",
-                    url: "blog_posts/2023_01_16.html",
-                    excerpt: "This post is a collection of different things I've wanted to try embedding in HTML including Compiler Explorer and Jupyterlite.",
-                    tags: ["HTML", "Visualization", "JavaScript"]
-                }
-                // Add more blog posts here as you create them
-            ];
+            // Blog posts will be loaded from JSON file
+            let blogPosts = [];
+            
+            // Load blog posts from JSON file
+            fetch('blog_metadata.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to load blog metadata');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    blogPosts = data;
+                    // Initialize the blog page after loading posts
+                    displayAllBlogPosts();
+                    populateTagFilters();
+                })
+                .catch(error => {
+                    console.error('Error loading blog posts:', error);
+                    document.getElementById('all-blog-posts').innerHTML = 
+                        '<p class="no-results">Error loading blog posts. Please run generate_blog_metadata.py to generate the metadata file.</p>';
+                });
 
             // Function to display all blog posts
             function displayAllBlogPosts(posts = blogPosts) {
@@ -216,9 +227,8 @@
                 filterPosts(activeTag, searchTerm);
             });
 
-            // Initialize the blog page
-            displayAllBlogPosts();
-            populateTagFilters();
+            // Note: displayAllBlogPosts() and populateTagFilters() are now called 
+            // after the JSON file is loaded (see fetch() above)
 
             // Add click event to tags within posts for filtering
             document.addEventListener('click', function (e) {

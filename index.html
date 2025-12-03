@@ -168,18 +168,9 @@
 	<!-- Theme toggle script -->
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
-			// Manually defined blog posts
-			const blogPosts = [
-				{
-					title: "Embedding Visualization in HTML",
-					date: "2023-01-16",
-					url: "blog_posts/2023_01_16.html",
-					excerpt: "This post is a collection of different things I've wanted to try embedding in HTML including Compiler Explorer and Jupyterlite.",
-					tags: ["HTML", "Visualization", "JavaScript"]
-				}
-				// Add more blog posts here as you create them
-			];
-
+			// Blog posts will be loaded from JSON file
+			let blogPosts = [];
+			
 			// Function to display blog posts
 			function displayBlogPosts() {
 				const blogPostsContainer = document.getElementById('blog-posts');
@@ -222,8 +213,25 @@
 				});
 			}
 
-			// Display blog posts
-			displayBlogPosts();
+			// Load blog posts from JSON file
+			fetch('blog_metadata.json')
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Failed to load blog metadata');
+					}
+					return response.json();
+				})
+				.then(data => {
+					blogPosts = data;
+					displayBlogPosts();
+				})
+				.catch(error => {
+					console.error('Error loading blog posts:', error);
+					const blogPostsContainer = document.getElementById('blog-posts');
+					if (blogPostsContainer) {
+						blogPostsContainer.innerHTML = '<p>No blog posts available.</p>';
+					}
+				});
 
 			// Theme toggle functionality
 			const themeToggle = document.getElementById('theme-toggle');
