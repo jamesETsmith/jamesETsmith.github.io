@@ -13,6 +13,9 @@
     <!-- Graphology Library (includes Layouts) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology-library/0.8.0/graphology-library.min.js"></script>
 
+    <!-- Twitter Widgets -->
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
     <style>
         body {
             font-family: sans-serif;
@@ -25,7 +28,6 @@
 
         #controls-container {
             width: 300px;
-            /* Slightly wider for tweet list */
             padding: 10px;
             background: #f9f9f9;
             border-right: 1px solid #ddd;
@@ -35,6 +37,8 @@
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
+            z-index: 20;
+            /* Ensure controls are above graph */
         }
 
         #graph-container {
@@ -130,10 +134,36 @@
             font-size: 13px;
             text-decoration: none;
             color: #0066cc;
+            padding: 2px;
         }
 
         .tweet-link:hover {
             text-decoration: underline;
+            background-color: #e6f0ff;
+        }
+
+        /* Tweet Preview Styles */
+        #tweet-preview {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            z-index: 100;
+            display: none;
+        }
+
+        #tweet-preview h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
         }
     </style>
 </head>
@@ -161,6 +191,10 @@
     <div id="graph-container">
         <div id="sigma-container"></div>
         <div id="tooltip"></div>
+        <div id="tweet-preview">
+            <h4>Tweet Preview</h4>
+            <div id="tweet-embed"></div>
+        </div>
     </div>
 
     <script defer>
@@ -216,6 +250,8 @@
                     const tooltip = document.getElementById('tooltip');
                     const tweetList = document.getElementById('tweet-list');
                     const tweetListHeader = document.querySelector('#tweet-list-container h3');
+                    const tweetPreview = document.getElementById('tweet-preview');
+                    const tweetEmbed = document.getElementById('tweet-embed');
 
                     const renderer = new Sigma(graph, container, {
                         enableEdgeEvents: true,
@@ -290,6 +326,13 @@
                     let hoveredNode = undefined;
                     let hoveredNeighbors = undefined;
 
+                    // Helper to get tweet ID
+                    const getTweetId = (url) => {
+                        if (!url) return null;
+                        const match = url.match(/status\/(\d+)/);
+                        return match ? match[1] : null;
+                    };
+
                     renderer.on("enterNode", ({ node }) => {
                         hoveredNode = node;
                         hoveredNeighbors = new Set(graph.neighbors(node));
@@ -313,6 +356,36 @@
                                 a.target = '_blank';
                                 a.className = 'tweet-link';
                                 a.textContent = link;
+
+                                // Hover listener for tweet preview
+                                a.addEventListener('mouseenter', () => {
+                                    const tweetId = getTweetId(link);
+                                    if (tweetId && window.twttr) {
+                                        tweetPreview.style.display = 'block';
+                                        tweetEmbed.innerHTML = 'Loading...';
+
+                                        // Use Twitter Widgets to create tweet
+                                        window.twttr.widgets.createTweet(
+                                            tweetId,
+                                            tweetEmbed,
+                                            {
+                                                theme: 'light',
+                                                width: 250
+                                            }
+                                        ).then(el => {
+                                            if (!el) tweetEmbed.innerHTML = 'Tweet not found.';
+                                            else {
+                                                // Remove loading text if it's still there (the widget replaces content usually, but safety first)
+                                                if (tweetEmbed.firstChild.nodeType === 3) tweetEmbed.firstChild.remove();
+                                            }
+                                        });
+                                    }
+                                });
+
+                                // Optional: Hide preview on mouseleave? 
+                                // Or keep it until another is hovered. 
+                                // Let's hide on list leave or explicit leave.
+
                                 tweetList.appendChild(a);
                             });
                         } else {
@@ -325,12 +398,15 @@
                     renderer.on("leaveNode", () => {
                         hoveredNode = undefined;
                         hoveredNeighbors = undefined;
-                        // Don't clear the tweet list immediately so user can click links
-                        // Or we can clear it if we want strict hover behavior.
-                        // For now, let's leave the last hovered node's tweets visible.
-
                         renderer.refresh();
                     });
+
+                    // Hide tweet preview when leaving the list or clicking elsewhere
+                    tweetList.addEventListener('mouseleave', () => {
+                        tweetPreview.style.display = 'none';
+                        tweetEmbed.innerHTML = '';
+                    });
+
 
                     renderer.setSetting("nodeReducer", (node, data) => {
                         const res = { ...data };
@@ -402,5 +478,7 @@
         });
     </script>
 </body>
+
+</html>
 
 </html>
