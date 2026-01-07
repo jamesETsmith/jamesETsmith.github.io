@@ -9,8 +9,11 @@
     <!-- Graphology and Sigma -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
-    <!-- Layout Algorithms -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology-layout/0.6.1/graphology-layout.min.js"></script>
+
+    <!-- Graphology Library (includes Layouts, Communities, etc.) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology-library/0.8.0/graphology-library.min.js"></script>
+
+    <!-- Fallback for ForceAtlas2 if not in library (sometimes separate) -->
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/graphology-layout-forceatlas2/0.10.1/graphology-layout-forceatlas2.min.js"></script>
 
@@ -48,6 +51,8 @@
         <button id="layout-random">Random Layout</button>
         <button id="layout-circular">Circular Layout</button>
         <button id="layout-forceatlas2">ForceAtlas2 Layout</button>
+        <button id="color-clusters">Color Clusters (Louvain)</button>
+        <button id="color-categories">Color by Category</button>
     </div>
     <div id="sigma-container"></div>
     <div id="tooltip"></div>
@@ -61,15 +66,21 @@
                     // Create a new Graphology graph
                     const graph = new graphology.Graph();
 
+                    // Store initial category colors for restoration
+                    const initialColors = {};
+
                     // Import data manually to ensure full control
                     data.nodes.forEach(node => {
+                        initialColors[node.id] = node.color; // Store initial color
+
                         graph.addNode(node.id, {
                             label: node.label,
                             // Ensure x and y are numbers. If missing from JSON, use random.
                             x: typeof node.x === 'number' ? node.x : Math.random(),
                             y: typeof node.y === 'number' ? node.y : Math.random(),
                             size: 1, // Default size, will be updated based on degree
-                            color: node.color
+                            color: node.color,
+                            category: node.category // Add category to attributes
                         });
                     });
 
@@ -113,9 +124,9 @@
                     };
 
                     const circularLayout = () => {
-                        // Try using the global graphologyLayout if available
-                        if (window.graphologyLayout && window.graphologyLayout.circular) {
-                            window.graphologyLayout.circular.assign(graph);
+                        // Try using graphologyLibrary.layout.circular
+                        if (window.graphologyLibrary && window.graphologyLibrary.layout && window.graphologyLibrary.layout.circular) {
+                            window.graphologyLibrary.layout.circular.assign(graph);
                         } else {
                             // Fallback manual circular layout
                             console.log('Using fallback circular layout');
@@ -130,26 +141,77 @@
                     };
 
                     const forceAtlas2Layout = () => {
-                        // Check for forceAtlas2 global
-                        // The CDN usually exposes it as `graphologyLibrary.layout.forceAtlas2` or `forceAtlas2`
-                        // Let's try likely candidates
+                        // Check for forceAtlas2 in library or global
                         let fa2 = null;
-                        if (window.graphologyLayoutForceAtlas2) fa2 = window.graphologyLayoutForceAtlas2;
-                        else if (window.forceAtlas2) fa2 = window.forceAtlas2;
+                        if (window.graphologyLibrary && window.graphologyLibrary.layout && window.graphologyLibrary.layout.forceAtlas2) {
+                            fa2 = window.graphologyLibrary.layout.forceAtlas2;
+                        } else if (window.graphologyLayoutForceAtlas2) {
+                            fa2 = window.graphologyLayoutForceAtlas2;
+                        }
 
                         if (fa2) {
                             console.log('Running ForceAtlas2...');
-                            fa2.assign(graph, { iterations: 50, settings: { gravity: 1 } });
+                            fa2.assign(graph, {
+                                iterations: 50,
+                                settings: {
+                                    gravity: 1
+                                }
+                            });
                         } else {
-                            console.error("ForceAtlas2 layout library not found. Check global variables.");
-                            console.log(window); // to debug available globals
+                            console.error("ForceAtlas2 layout library not found. Checked graphologyLibrary and global.");
                         }
+                    };
+
+                    const colorClusters = () => {
+                        // Check for louvain in library
+                        let louvain = null;
+                        if (window.graphologyLibrary && window.graphologyLibrary.communities && window.graphologyLibrary.communities.louvain) {
+                            louvain = window.graphologyLibrary.communities.louvain;
+                        }
+
+                        if (louvain) {
+                            console.log('Running Louvain...');
+                            // Assign communities
+                            louvain.assign(graph);
+
+                            // Map community ID to color
+                            const colors = [
+                                '#FF5733', '#33FF57', '#3357FF', '#F3FF33', '#FF33A1',
+                                '#A133FF', '#33FFF6', '#FF8C33', '#8C33FF', '#33FF8C'
+                            ];
+
+                            const communityColors = {};
+                            let colorIndex = 0;
+
+                            graph.forEachNode(node => {
+                                const community = graph.getNodeAttribute(node, 'community');
+                                if (communityColors[community] === undefined) {
+                                    communityColors[community] = colors[colorIndex % colors.length];
+                                    colorIndex++;
+                                }
+                                graph.setNodeAttribute(node, 'color', communityColors[community]);
+                            });
+
+                        } else {
+                            console.error("Louvain library not found in graphologyLibrary.");
+                            console.log("graphologyLibrary:", window.graphologyLibrary);
+                        }
+                    };
+
+                    const colorByCategories = () => {
+                        graph.forEachNode(node => {
+                            if (initialColors[node]) {
+                                graph.setNodeAttribute(node, 'color', initialColors[node]);
+                            }
+                        });
                     };
 
                     // Bind buttons
                     document.getElementById('layout-random').addEventListener('click', randomLayout);
                     document.getElementById('layout-circular').addEventListener('click', circularLayout);
                     document.getElementById('layout-forceatlas2').addEventListener('click', forceAtlas2Layout);
+                    document.getElementById('color-clusters').addEventListener('click', colorClusters);
+                    document.getElementById('color-categories').addEventListener('click', colorByCategories);
 
                     // --- Tooltip Logic ---
 
