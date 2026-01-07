@@ -16,16 +16,40 @@
     <style>
         body {
             font-family: sans-serif;
+            display: flex;
+            /* Use flexbox for layout */
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #controls-container {
+            width: 300px;
+            /* Slightly wider for tweet list */
+            padding: 10px;
+            background: #f9f9f9;
+            border-right: 1px solid #ddd;
+            height: 100vh;
+            overflow-y: auto;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        #graph-container {
+            flex-grow: 1;
+            position: relative;
+            height: 100vh;
         }
 
         #controls {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         #sigma-container {
-            width: 800px;
-            height: 600px;
-            border: 1px solid black;
+            width: 100%;
+            height: 100%;
         }
 
         #tooltip {
@@ -36,19 +60,109 @@
             padding: 5px;
             border-radius: 4px;
             pointer-events: none;
-            /* Let clicks pass through */
             z-index: 1000;
+        }
+
+        /* Legend Styles */
+        #legend {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        .legend-item:hover {
+            background-color: #eee;
+        }
+
+        .legend-item.active {
+            background-color: #ddd;
+            font-weight: bold;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+
+        .legend-label {
+            color: #333;
+        }
+
+        #show-all-btn {
+            margin-top: 10px;
+            width: 100%;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        /* Tweet List Styles */
+        #tweet-list-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+            min-height: 200px;
+        }
+
+        #tweet-list {
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .tweet-link {
+            display: block;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 13px;
+            text-decoration: none;
+            color: #0066cc;
+        }
+
+        .tweet-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
-    <div id="controls">
-        <button id="layout-random">Random Layout</button>
-        <button id="layout-circular">Circular Layout</button>
+    <div id="controls-container">
+        <h3>Controls</h3>
+        <div id="controls">
+            <button id="layout-random">Random Layout</button>
+            <button id="layout-circular">Circular Layout</button>
+        </div>
+
+        <h3>Categories</h3>
+        <div id="legend"></div>
+        <button id="show-all-btn">Show All</button>
+
+        <div id="tweet-list-container">
+            <h3>Tweets for Tag</h3>
+            <div id="tweet-list">
+                <p>Hover over a node to see tweets.</p>
+            </div>
+        </div>
     </div>
-    <div id="sigma-container"></div>
-    <div id="tooltip"></div>
+
+    <div id="graph-container">
+        <div id="sigma-container"></div>
+        <div id="tooltip"></div>
+    </div>
+
     <script defer>
         document.addEventListener('DOMContentLoaded', () => {
             // Load the graph data
@@ -59,6 +173,9 @@
                     // Create a new Graphology graph
                     const graph = new graphology.Graph();
 
+                    // Track categories and their colors
+                    const categories = new Map();
+
                     // Import data manually
                     data.nodes.forEach(node => {
                         graph.addNode(node.id, {
@@ -67,9 +184,14 @@
                             y: typeof node.y === 'number' ? node.y : Math.random(),
                             size: 1,
                             color: node.color,
-                            originalColor: node.color, // Store original color
+                            originalColor: node.color,
                             category: node.category
                         });
+
+                        // Collect unique categories
+                        if (node.category && !categories.has(node.category)) {
+                            categories.set(node.category, node.color);
+                        }
                     });
 
                     data.edges.forEach(edge => {
@@ -77,7 +199,7 @@
                             graph.addEdge(edge.source, edge.target, {
                                 size: edge.size,
                                 color: edge.color,
-                                originalColor: edge.color, // Store original color
+                                originalColor: edge.color,
                                 tweet_link: edge.tweet_link
                             });
                         }
@@ -92,14 +214,14 @@
                     // Create the sigma instance
                     const container = document.getElementById('sigma-container');
                     const tooltip = document.getElementById('tooltip');
+                    const tweetList = document.getElementById('tweet-list');
+                    const tweetListHeader = document.querySelector('#tweet-list-container h3');
 
                     const renderer = new Sigma(graph, container, {
-                        // Enable edge events
                         enableEdgeEvents: true,
                         edgeHoverColor: '#888',
                         edgeHoverSizeRatio: 2,
-                        // Render settings
-                        labelRenderedSizeThreshold: 6 // Only show labels when nodes are big enough or hovered
+                        labelRenderedSizeThreshold: 6
                     });
 
                     // --- Layout Logic ---
@@ -125,44 +247,108 @@
                         }
                     };
 
-                    // Bind buttons
                     document.getElementById('layout-random').addEventListener('click', randomLayout);
                     document.getElementById('layout-circular').addEventListener('click', circularLayout);
 
-                    // --- Interaction Logic (Hover Neighbors) ---
+                    // --- Legend & Filtering Logic ---
+
+                    const legendContainer = document.getElementById('legend');
+                    let activeCategory = null;
+
+                    // Build Legend
+                    categories.forEach((color, category) => {
+                        const item = document.createElement('div');
+                        item.className = 'legend-item';
+                        item.innerHTML = `<div class="legend-color" style="background-color: ${color}"></div><span class="legend-label">${category}</span>`;
+
+                        item.addEventListener('click', () => {
+                            // Toggle category
+                            if (activeCategory === category) {
+                                activeCategory = null;
+                                item.classList.remove('active');
+                            } else {
+                                activeCategory = category;
+                                // Update UI
+                                document.querySelectorAll('.legend-item').forEach(el => el.classList.remove('active'));
+                                item.classList.add('active');
+                            }
+                            renderer.refresh();
+                        });
+
+                        legendContainer.appendChild(item);
+                    });
+
+                    document.getElementById('show-all-btn').addEventListener('click', () => {
+                        activeCategory = null;
+                        document.querySelectorAll('.legend-item').forEach(el => el.classList.remove('active'));
+                        renderer.refresh();
+                    });
+
+
+                    // --- Interaction Logic (Hover + Filter + Tweet List) ---
 
                     let hoveredNode = undefined;
                     let hoveredNeighbors = undefined;
 
-                    // Bind node hover events
                     renderer.on("enterNode", ({ node }) => {
                         hoveredNode = node;
                         hoveredNeighbors = new Set(graph.neighbors(node));
 
-                        // Force refresh to apply the "reducer" logic below
+                        // Populate Tweet List
+                        const nodeLabel = graph.getNodeAttribute(node, 'label');
+                        tweetListHeader.textContent = `Tweets for "${nodeLabel}"`;
+                        tweetList.innerHTML = '';
+
+                        const links = new Set();
+                        graph.forEachEdge(node, (edge, attributes, source, target) => {
+                            if (attributes.tweet_link) {
+                                links.add(attributes.tweet_link);
+                            }
+                        });
+
+                        if (links.size > 0) {
+                            links.forEach(link => {
+                                const a = document.createElement('a');
+                                a.href = link;
+                                a.target = '_blank';
+                                a.className = 'tweet-link';
+                                a.textContent = link;
+                                tweetList.appendChild(a);
+                            });
+                        } else {
+                            tweetList.innerHTML = '<p>No linked tweets found.</p>';
+                        }
+
                         renderer.refresh();
                     });
 
                     renderer.on("leaveNode", () => {
                         hoveredNode = undefined;
                         hoveredNeighbors = undefined;
+                        // Don't clear the tweet list immediately so user can click links
+                        // Or we can clear it if we want strict hover behavior.
+                        // For now, let's leave the last hovered node's tweets visible.
 
-                        // Force refresh to reset
                         renderer.refresh();
                     });
 
-                    // Use reducers to handle visual state efficiently
                     renderer.setSetting("nodeReducer", (node, data) => {
                         const res = { ...data };
 
-                        // If a node is hovered, grey out nodes that are not neighbors
+                        // 1. Filtering Check
+                        if (activeCategory && res.category !== activeCategory) {
+                            res.hidden = true;
+                            res.label = "";
+                            return res;
+                        }
+
+                        // 2. Hover Check
                         if (hoveredNode && node !== hoveredNode && !hoveredNeighbors.has(node)) {
                             res.label = "";
-                            res.color = "#f6f6f6"; // Dimmed color
-                            res.zIndex = 0; // Put in back
+                            res.color = "#f6f6f6";
+                            res.zIndex = 0;
                         } else if (hoveredNode) {
-                            // Highlight hovered node and neighbors
-                            res.zIndex = 10; // Bring to front
+                            res.zIndex = 10;
                         }
 
                         return res;
@@ -171,10 +357,19 @@
                     renderer.setSetting("edgeReducer", (edge, data) => {
                         const res = { ...data };
 
-                        // If a node is hovered, grey out edges not connected to it
+                        // 1. Filtering Check
+                        if (activeCategory) {
+                            const sourceCat = graph.getNodeAttribute(graph.source(edge), 'category');
+                            const targetCat = graph.getNodeAttribute(graph.target(edge), 'category');
+                            if (sourceCat !== activeCategory || targetCat !== activeCategory) {
+                                res.hidden = true;
+                                return res;
+                            }
+                        }
+
+                        // 2. Hover Check
                         if (hoveredNode && !graph.hasExtremity(edge, hoveredNode)) {
-                            res.hidden = true; // Or set color to very light grey
-                            // res.color = "#f6f6f6";
+                            res.hidden = true;
                         }
                         return res;
                     });
