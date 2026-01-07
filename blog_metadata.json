@@ -5,9 +5,20 @@
     "url": "blog_posts/2026_01_07.html",
     "excerpt": "Setting up monitorying for the DIY cluster.",
     "tags": [
-      "netcloud",
+      "netdata",
       "cluster",
       "monitoring"
+    ]
+  },
+  {
+    "title": "Visualizing Twitter Tags with Sigma.js",
+    "date": "2026-01-05",
+    "url": "blog_posts/2026_01_05.html",
+    "excerpt": "Interactive network graph of Twitter tags using Sigma.js.",
+    "tags": [
+      "sigma.js",
+      "visualization",
+      "graph"
     ]
   },
   {

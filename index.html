@@ -62,10 +62,14 @@
 		<main>
 			<section id="about">
 				<h2>About Me</h2>
-				<p>I'm currently a Member of the Technical Staff at AMD working on open source C++ software for AI and Data Science. 
-					Previously, I was a Senior Research Engineer at <a href="https://www.qognitive.io/">Qognitive</a> where I designed and implemented efficient numerical methods for machine learning and quantum computing algorithms. 
-					Before that, I was a Member of the Technical Staff at  <a href="https://lucata.com/">Lucata</a> where I worked on porting <a href="https://graphblas.org/">GraphBLAS</a> to Lucata's custom hardware. 
-					My work focused on implementing highly parallel linear algebra methods in C/C++. 
+				<p>I'm currently a Member of the Technical Staff at AMD working on open source C++ software for AI and
+					Data Science.
+					Previously, I was a Senior Research Engineer at <a href="https://www.qognitive.io/">Qognitive</a>
+					where I designed and implemented efficient numerical methods for machine learning and quantum
+					computing algorithms.
+					Before that, I was a Member of the Technical Staff at <a href="https://lucata.com/">Lucata</a> where
+					I worked on porting <a href="https://graphblas.org/">GraphBLAS</a> to Lucata's custom hardware.
+					My work focused on implementing highly parallel linear algebra methods in C/C++.
 					Before that I was a Flatiron Research Fellow in the Center for<a
 						href="https://www.simonsfoundation.org/flatiron/center-for-computational-quantum-physics/">Center
 						for Computational Quantum Physics</a> at the <a
@@ -95,6 +99,10 @@
 				<h2>Software</h2>
 				<p>I contribute to a number of open source software projects, here are a few:</p>
 				<div class="projects">
+					<div class="project">
+						<h3><a href="https://github.com/rocm/dgl">Deep Graph Library</a></h3>
+						<p>A port of the Deep Graph Library (DGL) for compatibility with AMD GPUs.</p>
+					</div>
 					<div class="project">
 						<h3><a href="https://github.com/qognitive/fast-pauli">Fast Pauli</a></h3>
 						<p>A fast and memory efficient library for evaluating and simulating Pauli strings for quantum
@@ -170,7 +178,7 @@
 		document.addEventListener('DOMContentLoaded', function () {
 			// Blog posts will be loaded from JSON file
 			let blogPosts = [];
-			
+
 			// Function to display blog posts
 			function displayBlogPosts() {
 				const blogPostsContainer = document.getElementById('blog-posts');
