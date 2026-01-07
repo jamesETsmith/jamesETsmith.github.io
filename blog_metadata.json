@@ -1,5 +1,16 @@
 [
   {
+    "title": "Setting up monitorying for the DIY cluster",
+    "date": "2026-01-07",
+    "url": "blog_posts/2026_01_07.html",
+    "excerpt": "Setting up monitorying for the DIY cluster.",
+    "tags": [
+      "netcloud",
+      "cluster",
+      "monitoring"
+    ]
+  },
+  {
     "title": "DIY Cluster and Distributed Building Machine",
     "date": "2025-12-03",
     "url": "blog_posts/2025_12_03.html",
