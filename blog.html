@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html lang="en" data-theme="light">
+
+<head>
+    <title>Blog - James E. T. Smith, Ph.D.</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/minimal.css" />
+    <link rel="icon" href="images/k4_planar.svg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-container">
+                <div class="header-content">
+                    <h1>James E. T. Smith, Ph.D.</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="index.html#about">About</a></li>
+                            <li><a href="index.html#software">Software</a></li>
+                            <li><a href="publications.html">Publications</a></li>
+                            <li><a href="index.html#talks">Talks</a></li>
+                            <li><a href="blog.html" class="active">Blog</a></li>
+                            <li><a href="index.html#contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header-image">
+                    <img src="images/headshot_small.png" alt="James E. T. Smith" />
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section id="blog">
+                <h2>Blog</h2>
+                <p>Ramblings and half-baked thoughts on scientific computing, quantum chemistry, and software development.</p>
+
+                <div class="blog-filters">
+                    <div class="search-container">
+                        <input type="text" id="blog-search" placeholder="Search posts...">
+                    </div>
+                    <div class="tag-filters" id="tag-filters">
+                        <!-- Tags will be populated dynamically -->
+                    </div>
+                </div>
+
+                <div id="all-blog-posts" class="all-blog-posts">
+                    <!-- Blog posts will be loaded here dynamically -->
+                    <div class="loading">Loading blog posts...</div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; James E. T. Smith, Ph.D.</p>
+        </footer>
+    </div>
+
+    <!-- Theme toggle button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Script to load blog posts and handle theme toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Blog posts will be loaded from JSON file
+            let blogPosts = [];
+            
+            // Load blog posts from JSON file
+            fetch('blog_metadata.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to load blog metadata');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    blogPosts = data;
+                    // Initialize the blog page after loading posts
+                    displayAllBlogPosts();
+                    populateTagFilters();
+                })
+                .catch(error => {
+                    console.error('Error loading blog posts:', error);
+                    document.getElementById('all-blog-posts').innerHTML = 
+                        '<p class="no-results">Error loading blog posts. Please run generate_blog_metadata.py to generate the metadata file.</p>';
+                });
+
+            // Function to display all blog posts
+            function displayAllBlogPosts(posts = blogPosts) {
+                const blogPostsContainer = document.getElementById('all-blog-posts');
+
+                // Clear container
+                blogPostsContainer.innerHTML = '';
+
+                // Sort by date (newest first)
+                posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                if (posts.length === 0) {
+                    blogPostsContainer.innerHTML = '<p class="no-results">No blog posts found.</p>';
+                    return;
+                }
+
+                // Group posts by year
+                const postsByYear = {};
+                posts.forEach(post => {
+                    const year = new Date(post.date).getFullYear();
+                    if (!postsByYear[year]) {
+                        postsByYear[year] = [];
+                    }
+                    postsByYear[year].push(post);
+                });
+
+                // Create HTML for each year and its posts
+                Object.keys(postsByYear).sort((a, b) => b - a).forEach(year => {
+                    const yearSection = document.createElement('div');
+                    yearSection.className = 'blog-year';
+                    yearSection.innerHTML = `<h3 class="year-heading">${year}</h3>`;
+
+                    const yearPosts = document.createElement('div');
+                    yearPosts.className = 'year-posts';
+
+                    postsByYear[year].forEach(post => {
+                        const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+                            month: 'long',
+                            day: 'numeric'
+                        });
+
+                        const postElement = document.createElement('div');
+                        postElement.className = 'blog-post-item';
+                        postElement.innerHTML = `
+                            <div class="post-date">${formattedDate}</div>
+                            <div class="post-content">
+                                <h4><a href="${post.url}">${post.title}</a></h4>
+                                <p class="post-excerpt">${post.excerpt}</p>
+                                <div class="post-tags">
+                                    ${post.tags.map(tag => `<span class="tag" data-tag="${tag}">${tag}</span>`).join('')}
+                                </div>
+                            </div>
+                        `;
+
+                        yearPosts.appendChild(postElement);
+                    });
+
+                    yearSection.appendChild(yearPosts);
+                    blogPostsContainer.appendChild(yearSection);
+                });
+            }
+
+            // Function to populate tag filters
+            function populateTagFilters() {
+                const tagFiltersContainer = document.getElementById('tag-filters');
+                const allTags = new Set();
+
+                // Collect all unique tags
+                blogPosts.forEach(post => {
+                    post.tags.forEach(tag => allTags.add(tag));
+                });
+
+                // Create "All" filter
+                const allFilter = document.createElement('button');
+                allFilter.className = 'tag-filter active';
+                allFilter.textContent = 'All';
+                allFilter.dataset.tag = 'all';
+                tagFiltersContainer.appendChild(allFilter);
+
+                // Create filters for each tag
+                Array.from(allTags).sort().forEach(tag => {
+                    const tagFilter = document.createElement('button');
+                    tagFilter.className = 'tag-filter';
+                    tagFilter.textContent = tag;
+                    tagFilter.dataset.tag = tag;
+                    tagFiltersContainer.appendChild(tagFilter);
+                });
+
+                // Add event listeners to tag filters
+                document.querySelectorAll('.tag-filter').forEach(filter => {
+                    filter.addEventListener('click', function () {
+                        // Update active state
+                        document.querySelectorAll('.tag-filter').forEach(f => f.classList.remove('active'));
+                        this.classList.add('active');
+
+                        const selectedTag = this.dataset.tag;
+                        const searchTerm = document.getElementById('blog-search').value.toLowerCase();
+
+                        // Filter posts
+                        filterPosts(selectedTag, searchTerm);
+                    });
+                });
+            }
+
+            // Function to filter posts by tag and search term
+            function filterPosts(tag = 'all', searchTerm = '') {
+                let filteredPosts = blogPosts;
+
+                // Filter by tag
+                if (tag !== 'all') {
+                    filteredPosts = filteredPosts.filter(post => post.tags.includes(tag));
+                }
+
+                // Filter by search term
+                if (searchTerm) {
+                    filteredPosts = filteredPosts.filter(post =>
+                        post.title.toLowerCase().includes(searchTerm) ||
+                        post.excerpt.toLowerCase().includes(searchTerm) ||
+                        post.tags.some(t => t.toLowerCase().includes(searchTerm))
+                    );
+                }
+
+                // Display filtered posts
+                displayAllBlogPosts(filteredPosts);
+            }
+
+            // Set up search functionality
+            document.getElementById('blog-search').addEventListener('input', function () {
+                const searchTerm = this.value.toLowerCase();
+                const activeTag = document.querySelector('.tag-filter.active').dataset.tag;
+                filterPosts(activeTag, searchTerm);
+            });
+
+            // Note: displayAllBlogPosts() and populateTagFilters() are now called 
+            // after the JSON file is loaded (see fetch() above)
+
+            // Add click event to tags within posts for filtering
+            document.addEventListener('click', function (e) {
+                if (e.target.classList.contains('tag') && e.target.dataset.tag) {
+                    const tag = e.target.dataset.tag;
+                    const tagFilter = document.querySelector(`.tag-filter[data-tag="${tag}"]`);
+                    if (tagFilter) {
+                        tagFilter.click();
+                        window.scrollTo(0, 0);
+                    }
+                }
+            });
+
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+            const themeIcon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference or use device preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            // Set initial theme
+            if (savedTheme) {
+                htmlElement.setAttribute('data-theme', savedTheme);
+                updateThemeIcon(savedTheme);
+            } else if (prefersDark) {
+                htmlElement.setAttribute('data-theme', 'dark');
+                updateThemeIcon('dark');
+            }
+
+            // Toggle theme when button is clicked
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+
+            // Update icon based on current theme
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

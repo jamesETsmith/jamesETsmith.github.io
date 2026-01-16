@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="en" data-theme="light">
+
+<head>
+	<title>James E. T. Smith, Ph.D.</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/minimal.css" />
+	<link rel="icon" href="images/k4_planar.svg">
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+	<!-- Inline theme initialization script to prevent FOUC (Flash of Unstyled Content) -->
+	<script>
+		(function () {
+			// Check for saved theme preference or use device preference
+			const savedTheme = localStorage.getItem('theme');
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+			// Set initial theme immediately before page renders
+			if (savedTheme) {
+				document.documentElement.setAttribute('data-theme', savedTheme);
+			} else if (prefersDark) {
+				document.documentElement.setAttribute('data-theme', 'dark');
+			}
+		})();
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<header>
+			<div class="header-container">
+				<div class="header-content">
+					<h1>James E. T. Smith, Ph.D.</h1>
+					<nav>
+						<ul>
+							<li><a href="#about">About</a></li>
+							<li><a href="#software">Software</a></li>
+							<li><a href="publications.html">Publications</a></li>
+							<li><a href="#talks">Talks</a></li>
+							<li><a href="#blog">Blog</a></li>
+							<li><a href="#contact">Contact</a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="header-image">
+					<img src="images/headshot_small.png" alt="James E. T. Smith" />
+				</div>
+			</div>
+		</header>
+
+		<main>
+			<section id="about">
+				<h2>About Me</h2>
+				<p>I'm currently a Member of the Technical Staff at AMD working on open source C++ software for AI and
+					Data Science.
+					Previously, I was a Senior Research Engineer at <a href="https://www.qognitive.io/">Qognitive</a>
+					where I designed and implemented efficient numerical methods for machine learning and quantum
+					computing algorithms.
+					Before that, I was a Member of the Technical Staff at <a href="https://lucata.com/">Lucata</a> where
+					I worked on porting <a href="https://graphblas.org/">GraphBLAS</a> to Lucata's custom hardware.
+					My work focused on implementing highly parallel linear algebra methods in C/C++.
+					Before that I was a Flatiron Research Fellow in the Center for<a
+						href="https://www.simonsfoundation.org/flatiron/center-for-computational-quantum-physics/">Center
+						for Computational Quantum Physics</a> at the <a
+						href="https://www.simonsfoundation.org/flatiron/">Flatiron
+						Institute</a> developing more efficient and robust algorithms for quantum chemistry.
+					For a detailed
+					description
+					of my experience and publications please see my <a
+						href="resume_typst/james_smith_resume.pdf">resume</a>.
+				</p>
+
+				<div class="social-links">
+					<a href="https://github.com/jamesETsmith" aria-label="GitHub"><i class="fab fa-github"></i></a>
+					<a href="https://www.linkedin.com/in/james-smith-ph-d-8525792b" aria-label="LinkedIn"><i
+							class="fab fa-linkedin"></i></a>
+					<a href="https://scholar.google.com/citations?hl=en&user=VfVWPAYAAAAJ"
+						aria-label="Google Scholar"><i class="fab fa-google"></i></a>
+					<a href="mailto:james.smith9113@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+				</div>
+
+				<div class="resume-link">
+					<a href="resume_typst/james_smith_resume.pdf" class="button">Resume (PDF)</a>
+				</div>
+			</section>
+
+			<section id="software">
+				<h2>Software</h2>
+				<p>I contribute to a number of open source software projects, here are a few:</p>
+				<div class="projects">
+					<div class="project">
+						<h3><a href="https://github.com/rocm/dgl">Deep Graph Library</a></h3>
+						<p>A port of the Deep Graph Library (DGL) for compatibility with AMD GPUs.</p>
+					</div>
+					<div class="project">
+						<h3><a href="https://github.com/qognitive/fast-pauli">Fast Pauli</a></h3>
+						<p>A fast and memory efficient library for evaluating and simulating Pauli strings for quantum
+							computing and machine learning.</p>
+					</div>
+					<div class="project">
+						<h3><a href="https://github.com/pyscf/pyscf">PySCF</a></h3>
+						<p>An accessible Python package for quantum chemistry.</p>
+					</div>
+					<div class="project">
+						<h3><a href="https://github.com/sanshar/Dice">Dice</a></h3>
+						<p>Implementation of the heat-bath configuration interaction (HCI) algorithm for
+							strongly correlated quantum chemistry calculations.</p>
+					</div>
+					<div class="project">
+						<h3><a href="https://github.com/jamesETsmith/fri-cc">FRI-CC</a></h3>
+						<p>The fast randomized iteration algorithm applied to coupled cluster methods.</p>
+					</div>
+				</div>
+			</section>
+
+			<section id="blog">
+				<h2>Blog</h2>
+				<p>Thoughts and tutorials on scientific computing, quantum chemistry, and software development.</p>
+
+				<div id="blog-posts" class="blog-posts">
+					<!-- Blog posts will be loaded here dynamically -->
+					<div class="loading">Loading blog posts...</div>
+				</div>
+
+				<div class="all-posts">
+					<a href="blog.html" class="button">All Blog Posts</a>
+				</div>
+			</section>
+
+			<section id="talks">
+				<h2>Talks</h2>
+				<ul class="talks-list">
+					<li><a href="https://jamesetsmith.github.io/2023-06-15-cmake-intro/">CMake Intro</a> Lucata Inc.
+						Internal Meeting 2023</li>
+					<li><a href="https://jamesetsmith.github.io/2021_09_24_pyscf_overview_talk/">PySCF Overview
+							Talk</a>, CCQ Retreat 2021</li>
+					<li><a href="https://jamesetsmith.github.io/SHCI_Talk_10_22_20/">SHCI: A Semi-Pedagogical
+							Introduction</a>, Berkelbach Group Meeting 2020</li>
+				</ul>
+			</section>
+
+			<section id="contact">
+				<h2>Contact</h2>
+				<div class="social-links">
+					<a href="https://github.com/jamesETsmith" aria-label="GitHub"><i class="fab fa-github"></i></a>
+					<a href="https://www.linkedin.com/in/james-smith-ph-d-8525792b" aria-label="LinkedIn"><i
+							class="fab fa-linkedin"></i></a>
+					<a href="https://scholar.google.com/citations?hl=en&user=VfVWPAYAAAAJ"
+						aria-label="Google Scholar"><i class="fab fa-google"></i></a>
+					<a href="mailto:james.smith9113@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+				</div>
+			</section>
+		</main>
+
+		<footer>
+			<p>&copy; James E. T. Smith, Ph.D.</p>
+		</footer>
+	</div>
+
+	<!-- Theme toggle button -->
+	<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+		<i class="fas fa-moon"></i>
+	</button>
+
+	<!-- Theme toggle script -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			// Blog posts will be loaded from JSON file
+			let blogPosts = [];
+
+			// Function to display blog posts
+			function displayBlogPosts() {
+				const blogPostsContainer = document.getElementById('blog-posts');
+				if (!blogPostsContainer) return;
+
+				// Clear loading message
+				blogPostsContainer.innerHTML = '';
+
+				// Sort by date (newest first)
+				blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+				// Display up to 3 most recent posts
+				const recentPosts = blogPosts.slice(0, 3);
+
+				if (recentPosts.length === 0) {
+					blogPostsContainer.innerHTML = '<p>No blog posts found.</p>';
+					return;
+				}
+
+				// Create HTML for each post
+				recentPosts.forEach(post => {
+					const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric'
+					});
+
+					const postElement = document.createElement('div');
+					postElement.className = 'blog-post';
+					postElement.innerHTML = `
+						<div class="post-date">${formattedDate}</div>
+						<h3><a href="${post.url}">${post.title}</a></h3>
+						<p class="post-excerpt">${post.excerpt}</p>
+						<div class="post-tags">
+							${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+						</div>
+					`;
+
+					blogPostsContainer.appendChild(postElement);
+				});
+			}
+
+			// Load blog posts from JSON file
+			fetch('blog_metadata.json')
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Failed to load blog metadata');
+					}
+					return response.json();
+				})
+				.then(data => {
+					blogPosts = data;
+					displayBlogPosts();
+				})
+				.catch(error => {
+					console.error('Error loading blog posts:', error);
+					const blogPostsContainer = document.getElementById('blog-posts');
+					if (blogPostsContainer) {
+						blogPostsContainer.innerHTML = '<p>No blog posts available.</p>';
+					}
+				});
+
+			// Theme toggle functionality
+			const themeToggle = document.getElementById('theme-toggle');
+			const htmlElement = document.documentElement;
+			const themeIcon = themeToggle.querySelector('i');
+
+			// Set initial icon based on current theme
+			updateThemeIcon(htmlElement.getAttribute('data-theme') || 'light');
+
+			// Toggle theme when button is clicked
+			themeToggle.addEventListener('click', () => {
+				const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
+				const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+				htmlElement.setAttribute('data-theme', newTheme);
+				localStorage.setItem('theme', newTheme);
+				updateThemeIcon(newTheme);
+			});
+
+			// Update icon based on current theme
+			function updateThemeIcon(theme) {
+				if (theme === 'dark') {
+					themeIcon.classList.remove('fa-moon');
+					themeIcon.classList.add('fa-sun');
+				} else {
+					themeIcon.classList.remove('fa-sun');
+					themeIcon.classList.add('fa-moon');
+				}
+			}
+		});
+	</script>
+</body>
+
+</html>

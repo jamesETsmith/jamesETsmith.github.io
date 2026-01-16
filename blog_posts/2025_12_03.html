@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<html lang="en" data-theme="light">
+
+<head>
+    <title>DIY Cluster and Distributed Building Machine - James E. T. Smith, Ph.D.</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description"
+        content="While I'm out on parental leave, I don't have access to my work cluster. Since I still want to build larger software projects in a reasonable amount of time, I decided to try and hook up several old computers I had lying around." />
+    <meta name="keywords" content="sccache,HPC,distributed building,cluster" />
+    <link rel="stylesheet" href="../assets/css/minimal.css" />
+    <link rel="icon" href="../images/k4_planar.svg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-container">
+                <div class="header-content">
+                    <h1>James E. T. Smith, Ph.D.</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="../index.html#about">About</a></li>
+                            <li><a href="../index.html#software">Software</a></li>
+                            <li><a href="../publications.html">Publications</a></li>
+                            <li><a href="../index.html#talks">Talks</a></li>
+                            <li><a href="../blog.html" class="active">Blog</a></li>
+                            <li><a href="../index.html#contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header-image">
+                    <img src="../images/headshot_small.png" alt="James E. T. Smith" />
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <article class="blog-post-content">
+                <header class="post-header">
+                    <h2>DIY Cluster and Distributed Building Machine</h2>
+                    <div class="post-meta">
+                        <time datetime="2025-12-03">December 3, 2025</time>
+                        <div class="post-tags">
+                            <span class="tag">sccache</span>
+                            <span class="tag">HPC</span>
+                        </div>
+                    </div>
+                </header>
+
+                <section class="post-section">
+                    <p>While I'm out on parental leave, I don't have access to my work cluster. Since I still want to
+                        build larger software projects in a reasonable amount of time, I decided to try and hook up
+                        several old computers I had lying around.</p>
+                </section>
+
+                <section class="post-section">
+                    <h1>The Plan</h1>
+                    <em>The goal of this little project is just to speed up how fast I can build larger software
+                        projects (e.g. LLVM).</em>
+
+                    <br><br>
+
+                    <ol>
+                        <li>Compile time on a single computer</li>
+                        <li>Compile time on multiple computers connected via Ethernet</li>
+                        <li>Maybe setup slurm? (tbd on this since it's not necessary for my goal)</li>
+                    </ol>
+
+                    <br>
+
+                    <p>While I'm hoping to use this on projects the size of LLVM and PyTorch, for this I'm going to
+                        target a smaller project so I can iterate quickly.</p>
+                </section>
+
+                <section class="post-section">
+
+                    <h1>Setting up static IP Addresses for the Machines</h1>
+
+                    <p>Initially, I tried to set static IP addresses through the router, but the MAC address
+                        randomization made this a pain. So instead I created a script to setup the IP addresses on each
+                        machine.
+                    </p>
+
+                    <pre><code class="bash">#!/bin/bash
+
+# Auto-detect the Ethernet interface name
+# This looks for the first hardware device of type 'ethernet'
+IFACE=$(nmcli -t -f DEVICE,TYPE device | grep ':ethernet' | head -n 1 | cut -d: -f1)
+
+if [ -z "$IFACE" ]; then
+    echo "Error: No Ethernet hardware detected!"
+    exit 1
+fi
+
+# Define variables
+IP_ADDR="192.168.1.210/24" # Change this to the desired IP address
+GATEWAY="192.168.1.1"
+DNS_SERVERS="1.1.1.1,8.8.8.8"
+PROFILE_NAME="Home-Static"
+
+echo "Detected Interface: $IFACE"
+
+echo "Step 1: Removing old connection profiles..."
+sudo nmcli con delete "Wired connection 1" || true
+sudo nmcli con delete "$PROFILE_NAME" || true
+
+echo "Step 2: Creating new profile '$PROFILE_NAME' for $IFACE..."
+sudo nmcli con add type ethernet con-name "$PROFILE_NAME" ifname "$IFACE" \
+    ip4 "$IP_ADDR" gw4 "$GATEWAY"
+
+echo "Step 3: Configuring DNS and Method..."
+sudo nmcli con mod "$PROFILE_NAME" ipv4.dns "$DNS_SERVERS"
+sudo nmcli con mod "$PROFILE_NAME" ipv4.method manual
+
+echo "Step 4: Disabling MAC Randomization..."
+sudo nmcli con mod "$PROFILE_NAME" 802-3-ethernet.cloned-mac-address permanent
+
+echo "Step 5: Activating the connection..."
+sudo nmcli con up "$PROFILE_NAME"
+
+echo "------------------------------------------------"
+echo "Verification:"
+ip addr show "$IFACE" | grep "inet "
+                        </code></pre>
+
+                </section>
+
+                <section class="post-section">
+                    <h1>Setting up sccache</h1>
+
+                    Following the <a
+                        href="https://github.com/mozilla/sccache/blob/main/docs/DistributedQuickstart.md">instructions</a>
+                    on sccache's distributed setup. TLDR, I chose to setup a scheduler, client, and builder on my
+                    primary machine and then a builder on the secondary machine.
+
+                    <h2>Primary Machine</h2>
+
+                    <h3>Scheduler</h3>
+                    <pre><code class="toml"># scheduler.conf
+# Listen on LAN IP and a fixed port
+public_addr = "192.168.1.210:10600" # Change this to the desired IP address
+
+[client_auth]
+type = "token"
+token = "YOUR_CLIENT_TOKEN_HERE"
+
+[server_auth]
+type = "token"
+token = "YOUR_SERVER_TOKEN_HERE"
+</code></pre>
+
+                    <p>Start the scheduler</p>
+                    <pre><code class="bash">SCCACHE_NO_DAEMON=1 SCCACHE_LOG=trace sccache-dist scheduler --config scheduler.conf</code></pre>
+
+                    <h3>Build Server</h3>
+                    <pre><code class="toml"># server.conf
+# Listen address for the builder
+cache_dir = "/tmp/toolchains"
+public_addr = "192.168.1.210:10501"
+scheduler_url = "http://192.168.1.210:10600"
+
+[builder]
+type = "overlay"
+build_dir = "/var/lib/sccache/build"
+bwrap_path = "/usr/bin/bwrap"
+
+[scheduler_auth]
+type = "token"
+token = "YOUR_SERVER_TOKEN_HERE"
+</code></pre>
+
+                    <p>Start the build server</p>
+
+                    <pre><code class="bash">mkdir -p /var/lib/sccache/build
+sudo apt install bubblewrap
+sudo SCCACHE_LOG=trace $(which sccache-dist) server --config server.conf</code></pre>
+
+                    <h3>Client</h3>
+                    <pre><code class="toml"># client.conf
+[dist]
+scheduler_url = "http://192.168.1.210:10600"
+toolchain_cache_size = 10737418240
+
+[dist.auth]
+type = "token"
+token = "YOUR_CLIENT_TOKEN_HERE"
+</code></pre>
+
+                    <pre><code class="bash">export SCCACHE_CONF=/PATH/TO/client.conf
+sccache --start-server
+sccache --dist-status</code></pre>
+
+                    <p>Example output for three connected servers:</p>
+                    <pre><code class="bash">{"SchedulerStatus":["http://192.168.1.210:10600/",{"num_servers":3,"num_cpus":28,"in_progress":0}]}</code></pre>
+
+                </section>
+            </article>
+
+            <div class="post-navigation">
+                <a href="../blog.html" class="button"><i class="fas fa-arrow-left"></i> Back to All Posts</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; James E. T. Smith, Ph.D.</p>
+        </footer>
+    </div>
+
+    <!-- Theme toggle button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Theme toggle script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+            const themeIcon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference or use device preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            // Set initial theme
+            if (savedTheme) {
+                htmlElement.setAttribute('data-theme', savedTheme);
+                updateThemeIcon(savedTheme);
+            } else if (prefersDark) {
+                htmlElement.setAttribute('data-theme', 'dark');
+                updateThemeIcon('dark');
+            }
+
+            // Toggle theme when button is clicked
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+
+            // Update icon based on current theme
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

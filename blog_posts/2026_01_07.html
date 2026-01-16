@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html lang="en" data-theme="light">
+
+<head>
+    <title>Setting up monitorying for the DIY cluster - James E. T. Smith, Ph.D.</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="Setting up monitorying for the DIY cluster." />
+    <meta name="keywords" content="netdata cluster monitoring" />
+    <link rel="stylesheet" href="../assets/css/minimal.css" />
+    <link rel="icon" href="../images/k4_planar.svg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-container">
+                <div class="header-content">
+                    <h1>James E. T. Smith, Ph.D.</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="../index.html#about">About</a></li>
+                            <li><a href="../index.html#software">Software</a></li>
+                            <li><a href="../publications.html">Publications</a></li>
+                            <li><a href="../index.html#talks">Talks</a></li>
+                            <li><a href="../blog.html" class="active">Blog</a></li>
+                            <li><a href="../index.html#contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header-image">
+                    <img src="../images/headshot_small.png" alt="James E. T. Smith" />
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <article class="blog-post-content">
+                <header class="post-header">
+                    <h2>Setting up monitorying for the DIY cluster</h2>
+                    <div class="post-meta">
+                        <time datetime="2026-01-07">January 7, 2026</time>
+                        <div class="post-tags">
+                            <span class="tag">netdata</span>
+                            <span class="tag">cluster</span>
+                            <span class="tag">monitoring</span>
+                        </div>
+                    </div>
+                </header>
+
+                <section class="post-section">
+                    <p>Since the DIY cluster is now up and running (see previous post <a href="2025_12_03.html">DIY
+                            Cluster and Distributed Building Machine</a>), I wanted to set up some monitoring to help me
+                        keep
+                        track of the cluster's resource usage (especially during building larger software projects).</p>
+
+                    <p>In my limited experience, I was thinking of setting something up using Grafana and Prometheus. I
+                        did a little research with gemini and it's three top suggestions were:
+                    <ul>
+                        <li>netdata</li>
+                        <li>Grafana and Prometheus</li>
+                        <li>Glances</li>
+                    </ul>
+                    I don't really need to maintain historical data and the setup for netdata and Glances seemed simple
+                    enough so I tried them first.
+                    </p>
+
+                    <pre><code class="bash"># install netdata
+wget -O /tmp/netdata-kickstart.sh https://get.netdata.cloud/kickstart.sh && sh /tmp/netdata-kickstart.sh --no-updates --stable-channel --disable-telemetry
+                    </code></pre>
+                </section>
+            </article>
+
+            <div class="post-navigation">
+                <a href="../blog.html" class="button"><i class="fas fa-arrow-left"></i> Back to All Posts</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; James E. T. Smith, Ph.D.</p>
+        </footer>
+    </div>
+
+    <!-- Theme toggle button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Theme toggle script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+            const themeIcon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference or use device preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            // Set initial theme
+            if (savedTheme) {
+                htmlElement.setAttribute('data-theme', savedTheme);
+                updateThemeIcon(savedTheme);
+            } else if (prefersDark) {
+                htmlElement.setAttribute('data-theme', 'dark');
+                updateThemeIcon('dark');
+            }
+
+            // Toggle theme when button is clicked
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+
+            // Update icon based on current theme
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

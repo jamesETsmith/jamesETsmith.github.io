@@ -1,0 +1,1684 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d0" for="edge" attr.name="weight" attr.type="long" />
+  <graph edgedefault="undirected">
+    <node id="Quantization" />
+    <node id="Flux" />
+    <node id="HumanEval" />
+    <node id="Transformer" />
+    <node id="Fine-tuning" />
+    <node id="AI Ethics" />
+    <node id="AI Agents" />
+    <node id="Multimodal" />
+    <node id="Tokenization" />
+    <node id="Compute" />
+    <node id="Training" />
+    <node id="Anthropic" />
+    <node id="OpenAI" />
+    <node id="Big-Bench" />
+    <node id="Open Source" />
+    <node id="LLM" />
+    <node id="Inference" />
+    <node id="Venture Capital" />
+    <node id="Enterprise AI" />
+    <node id="DeepMind" />
+    <node id="GSM8K" />
+    <node id="Mistral AI" />
+    <node id="Mistral" />
+    <node id="GPU" />
+    <node id="DeepSeek" />
+    <node id="Gemini" />
+    <node id="Midjourney" />
+    <node id="xAI" />
+    <node id="IPO" />
+    <node id="Scaling Laws" />
+    <node id="Microsoft" />
+    <node id="Claude" />
+    <node id="Meta" />
+    <node id="AGI" />
+    <node id="Funding" />
+    <node id="RAG" />
+    <node id="ARC" />
+    <node id="Google" />
+    <node id="Foundation Model" />
+    <node id="ASI" />
+    <node id="Grok" />
+    <node id="MMLU" />
+    <node id="RLHF" />
+    <node id="NVIDIA" />
+    <node id="Startup" />
+    <node id="Prompt Engineering" />
+    <node id="GPT-4" />
+    <node id="Stable Diffusion" />
+    <node id="Hugging Face" />
+    <edge source="Quantization" target="Flux">
+      <data key="d0">183</data>
+    </edge>
+    <edge source="Quantization" target="HumanEval">
+      <data key="d0">116</data>
+    </edge>
+    <edge source="Quantization" target="Transformer">
+      <data key="d0">122</data>
+    </edge>
+    <edge source="Quantization" target="Fine-tuning">
+      <data key="d0">183</data>
+    </edge>
+    <edge source="Quantization" target="AI Ethics">
+      <data key="d0">81</data>
+    </edge>
+    <edge source="Quantization" target="AI Agents">
+      <data key="d0">22</data>
+    </edge>
+    <edge source="Quantization" target="Multimodal">
+      <data key="d0">37</data>
+    </edge>
+    <edge source="Quantization" target="Tokenization">
+      <data key="d0">38</data>
+    </edge>
+    <edge source="Quantization" target="Compute">
+      <data key="d0">70</data>
+    </edge>
+    <edge source="Quantization" target="Training">
+      <data key="d0">110</data>
+    </edge>
+    <edge source="Quantization" target="Anthropic">
+      <data key="d0">57</data>
+    </edge>
+    <edge source="Quantization" target="LLM">
+      <data key="d0">25</data>
+    </edge>
+    <edge source="Quantization" target="Inference">
+      <data key="d0">14</data>
+    </edge>
+    <edge source="Quantization" target="GSM8K">
+      <data key="d0">11</data>
+    </edge>
+    <edge source="Quantization" target="Big-Bench">
+      <data key="d0">99</data>
+    </edge>
+    <edge source="Quantization" target="GPU">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="Quantization" target="DeepSeek">
+      <data key="d0">17</data>
+    </edge>
+    <edge source="Quantization" target="DeepMind">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="Quantization" target="Midjourney">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="Quantization" target="Mistral AI">
+      <data key="d0">16</data>
+    </edge>
+    <edge source="Quantization" target="Mistral">
+      <data key="d0">18</data>
+    </edge>
+    <edge source="Quantization" target="xAI">
+      <data key="d0">16</data>
+    </edge>
+    <edge source="Quantization" target="IPO">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Quantization" target="Scaling Laws">
+      <data key="d0">18</data>
+    </edge>
+    <edge source="Quantization" target="Microsoft">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Quantization" target="Claude">
+      <data key="d0">29</data>
+    </edge>
+    <edge source="Quantization" target="Funding">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Quantization" target="RAG">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Quantization" target="Venture Capital">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Quantization" target="Gemini">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="Quantization" target="AGI">
+      <data key="d0">18</data>
+    </edge>
+    <edge source="Quantization" target="ARC">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Quantization" target="Google">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Quantization" target="Foundation Model">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Quantization" target="OpenAI">
+      <data key="d0">27</data>
+    </edge>
+    <edge source="Quantization" target="ASI">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Quantization" target="NVIDIA">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Quantization" target="Prompt Engineering">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Quantization" target="RLHF">
+      <data key="d0">16</data>
+    </edge>
+    <edge source="Quantization" target="Open Source">
+      <data key="d0">13</data>
+    </edge>
+    <edge source="Quantization" target="Grok">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Quantization" target="Startup">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Quantization" target="Meta">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Quantization" target="MMLU">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Quantization" target="Stable Diffusion">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Quantization" target="GPT-4">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="Quantization" target="Enterprise AI">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="Quantization" target="Hugging Face">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Flux" target="HumanEval">
+      <data key="d0">46</data>
+    </edge>
+    <edge source="Flux" target="Transformer">
+      <data key="d0">51</data>
+    </edge>
+    <edge source="Flux" target="Fine-tuning">
+      <data key="d0">60</data>
+    </edge>
+    <edge source="Flux" target="AI Ethics">
+      <data key="d0">69</data>
+    </edge>
+    <edge source="Flux" target="AI Agents">
+      <data key="d0">16</data>
+    </edge>
+    <edge source="Flux" target="Multimodal">
+      <data key="d0">35</data>
+    </edge>
+    <edge source="Flux" target="Tokenization">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="Flux" target="Compute">
+      <data key="d0">18</data>
+    </edge>
+    <edge source="Flux" target="Training">
+      <data key="d0">55</data>
+    </edge>
+    <edge source="Flux" target="Anthropic">
+      <data key="d0">64</data>
+    </edge>
+    <edge source="Flux" target="Big-Bench">
+      <data key="d0">75</data>
+    </edge>
+    <edge source="Flux" target="Mistral AI">
+      <data key="d0">30</data>
+    </edge>
+    <edge source="Flux" target="Mistral">
+      <data key="d0">25</data>
+    </edge>
+    <edge source="Flux" target="GPU">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="Flux" target="DeepSeek">
+      <data key="d0">13</data>
+    </edge>
+    <edge source="Flux" target="DeepMind">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Flux" target="Gemini">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Flux" target="Inference">
+      <data key="d0">11</data>
+    </edge>
+    <edge source="Flux" target="xAI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Flux" target="IPO">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Flux" target="RAG">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Flux" target="Midjourney">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="Flux" target="Venture Capital">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Flux" target="AGI">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="Flux" target="ASI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Flux" target="MMLU">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Flux" target="RLHF">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="Flux" target="Google">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Flux" target="Claude">
+      <data key="d0">13</data>
+    </edge>
+    <edge source="Flux" target="Scaling Laws">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="Flux" target="Prompt Engineering">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Flux" target="Grok">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="Flux" target="LLM">
+      <data key="d0">11</data>
+    </edge>
+    <edge source="Flux" target="ARC">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Flux" target="Foundation Model">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Flux" target="OpenAI">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="Flux" target="GSM8K">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Flux" target="GPT-4">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Flux" target="Enterprise AI">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="Flux" target="Startup">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Flux" target="Meta">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Flux" target="Stable Diffusion">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Flux" target="NVIDIA">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Flux" target="Funding">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Flux" target="Microsoft">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Flux" target="Open Source">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="HumanEval" target="Transformer">
+      <data key="d0">27</data>
+    </edge>
+    <edge source="HumanEval" target="Fine-tuning">
+      <data key="d0">92</data>
+    </edge>
+    <edge source="HumanEval" target="AI Ethics">
+      <data key="d0">24</data>
+    </edge>
+    <edge source="HumanEval" target="Anthropic">
+      <data key="d0">11</data>
+    </edge>
+    <edge source="HumanEval" target="Multimodal">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="HumanEval" target="Training">
+      <data key="d0">35</data>
+    </edge>
+    <edge source="HumanEval" target="GPU">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="HumanEval" target="Inference">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="HumanEval" target="Big-Bench">
+      <data key="d0">44</data>
+    </edge>
+    <edge source="HumanEval" target="Mistral">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="HumanEval" target="xAI">
+      <data key="d0">14</data>
+    </edge>
+    <edge source="HumanEval" target="Claude">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="HumanEval" target="Meta">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="HumanEval" target="OpenAI">
+      <data key="d0">15</data>
+    </edge>
+    <edge source="HumanEval" target="LLM">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="HumanEval" target="MMLU">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="HumanEval" target="RLHF">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="HumanEval" target="Compute">
+      <data key="d0">32</data>
+    </edge>
+    <edge source="HumanEval" target="DeepMind">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="HumanEval" target="DeepSeek">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="HumanEval" target="GSM8K">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="HumanEval" target="AI Agents">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="HumanEval" target="Startup">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="HumanEval" target="NVIDIA">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="HumanEval" target="ASI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="HumanEval" target="Gemini">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="HumanEval" target="Enterprise AI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="HumanEval" target="Tokenization">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="HumanEval" target="Foundation Model">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="HumanEval" target="AGI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="HumanEval" target="Scaling Laws">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="HumanEval" target="Hugging Face">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="HumanEval" target="Open Source">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="HumanEval" target="GPT-4">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="HumanEval" target="Google">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Transformer" target="Fine-tuning">
+      <data key="d0">72</data>
+    </edge>
+    <edge source="Transformer" target="AI Ethics">
+      <data key="d0">18</data>
+    </edge>
+    <edge source="Transformer" target="Venture Capital">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Transformer" target="Big-Bench">
+      <data key="d0">21</data>
+    </edge>
+    <edge source="Transformer" target="Enterprise AI">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Transformer" target="DeepMind">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Transformer" target="Training">
+      <data key="d0">49</data>
+    </edge>
+    <edge source="Transformer" target="Compute">
+      <data key="d0">24</data>
+    </edge>
+    <edge source="Transformer" target="Mistral AI">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Transformer" target="AI Agents">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="Transformer" target="Tokenization">
+      <data key="d0">33</data>
+    </edge>
+    <edge source="Transformer" target="Scaling Laws">
+      <data key="d0">12</data>
+    </edge>
+    <edge source="Transformer" target="Meta">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Transformer" target="OpenAI">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="Transformer" target="Funding">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Transformer" target="NVIDIA">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Transformer" target="Prompt Engineering">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Transformer" target="Multimodal">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="Transformer" target="AGI">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Transformer" target="Open Source">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Transformer" target="Inference">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Transformer" target="ARC">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Transformer" target="Claude">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="Transformer" target="Anthropic">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="Transformer" target="Foundation Model">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Transformer" target="DeepSeek">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Transformer" target="Mistral">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Transformer" target="Stable Diffusion">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Transformer" target="xAI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Transformer" target="RLHF">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Transformer" target="Startup">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Transformer" target="GSM8K">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Transformer" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Transformer" target="LLM">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Transformer" target="GPU">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Transformer" target="Google">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Transformer" target="GPT-4">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Fine-tuning" target="Anthropic">
+      <data key="d0">13</data>
+    </edge>
+    <edge source="Fine-tuning" target="OpenAI">
+      <data key="d0">20</data>
+    </edge>
+    <edge source="Fine-tuning" target="Big-Bench">
+      <data key="d0">62</data>
+    </edge>
+    <edge source="Fine-tuning" target="Open Source">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="Fine-tuning" target="Compute">
+      <data key="d0">64</data>
+    </edge>
+    <edge source="Fine-tuning" target="LLM">
+      <data key="d0">11</data>
+    </edge>
+    <edge source="Fine-tuning" target="Inference">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Fine-tuning" target="AI Ethics">
+      <data key="d0">26</data>
+    </edge>
+    <edge source="Fine-tuning" target="Training">
+      <data key="d0">59</data>
+    </edge>
+    <edge source="Fine-tuning" target="GSM8K">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Fine-tuning" target="Midjourney">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Fine-tuning" target="Mistral AI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Fine-tuning" target="IPO">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Fine-tuning" target="Tokenization">
+      <data key="d0">26</data>
+    </edge>
+    <edge source="Fine-tuning" target="Scaling Laws">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="Fine-tuning" target="Microsoft">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Fine-tuning" target="Multimodal">
+      <data key="d0">12</data>
+    </edge>
+    <edge source="Fine-tuning" target="Claude">
+      <data key="d0">17</data>
+    </edge>
+    <edge source="Fine-tuning" target="Meta">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Fine-tuning" target="DeepMind">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="Fine-tuning" target="DeepSeek">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Fine-tuning" target="AGI">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Fine-tuning" target="Google">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Fine-tuning" target="Foundation Model">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="Fine-tuning" target="NVIDIA">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Fine-tuning" target="Gemini">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Fine-tuning" target="ASI">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Fine-tuning" target="Startup">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Fine-tuning" target="Mistral">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Fine-tuning" target="RLHF">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Fine-tuning" target="xAI">
+      <data key="d0">15</data>
+    </edge>
+    <edge source="Fine-tuning" target="MMLU">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Fine-tuning" target="AI Agents">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Fine-tuning" target="Enterprise AI">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Fine-tuning" target="GPT-4">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Fine-tuning" target="GPU">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Fine-tuning" target="Hugging Face">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Fine-tuning" target="ARC">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Ethics" target="AI Agents">
+      <data key="d0">19</data>
+    </edge>
+    <edge source="AI Ethics" target="Multimodal">
+      <data key="d0">12</data>
+    </edge>
+    <edge source="AI Ethics" target="Big-Bench">
+      <data key="d0">27</data>
+    </edge>
+    <edge source="AI Ethics" target="Compute">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="AI Ethics" target="Training">
+      <data key="d0">27</data>
+    </edge>
+    <edge source="AI Ethics" target="Anthropic">
+      <data key="d0">27</data>
+    </edge>
+    <edge source="AI Ethics" target="Mistral AI">
+      <data key="d0">16</data>
+    </edge>
+    <edge source="AI Ethics" target="Mistral">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="AI Ethics" target="Inference">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="AI Ethics" target="Claude">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Ethics" target="AGI">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="AI Ethics" target="Open Source">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Ethics" target="Funding">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Ethics" target="LLM">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="AI Ethics" target="ASI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Ethics" target="OpenAI">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="AI Ethics" target="DeepMind">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Ethics" target="GSM8K">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="AI Ethics" target="Google">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Ethics" target="Foundation Model">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Ethics" target="Scaling Laws">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Ethics" target="Midjourney">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Ethics" target="Enterprise AI">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="AI Ethics" target="Prompt Engineering">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Ethics" target="Tokenization">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="AI Ethics" target="Grok">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Ethics" target="GPT-4">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Ethics" target="RLHF">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="AI Ethics" target="Venture Capital">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Ethics" target="DeepSeek">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Ethics" target="Meta">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="Multimodal">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="AI Agents" target="Mistral AI">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="AI Agents" target="Training">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="AI Agents" target="Enterprise AI">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="AI Agents" target="Claude">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="AGI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="Open Source">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Agents" target="Funding">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="Big-Bench">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="AI Agents" target="Tokenization">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AI Agents" target="Anthropic">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="GSM8K">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="LLM">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="AI Agents" target="Prompt Engineering">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="DeepMind">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="DeepSeek">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="RLHF">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="OpenAI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AI Agents" target="Foundation Model">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Multimodal" target="Anthropic">
+      <data key="d0">16</data>
+    </edge>
+    <edge source="Multimodal" target="DeepSeek">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Multimodal" target="DeepMind">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Multimodal" target="Microsoft">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Multimodal" target="Compute">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Multimodal" target="Training">
+      <data key="d0">11</data>
+    </edge>
+    <edge source="Multimodal" target="Big-Bench">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="Multimodal" target="Claude">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Multimodal" target="GSM8K">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Multimodal" target="Gemini">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Multimodal" target="Grok">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Multimodal" target="Mistral AI">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="Multimodal" target="Mistral">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Multimodal" target="Prompt Engineering">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Multimodal" target="LLM">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Multimodal" target="RLHF">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Multimodal" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Multimodal" target="Tokenization">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Multimodal" target="Midjourney">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Multimodal" target="Scaling Laws">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Multimodal" target="AGI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Multimodal" target="Meta">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Tokenization" target="Compute">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Tokenization" target="Training">
+      <data key="d0">13</data>
+    </edge>
+    <edge source="Tokenization" target="Scaling Laws">
+      <data key="d0">13</data>
+    </edge>
+    <edge source="Tokenization" target="Anthropic">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Tokenization" target="Foundation Model">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Tokenization" target="Stable Diffusion">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Tokenization" target="xAI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Tokenization" target="Open Source">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Tokenization" target="LLM">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Tokenization" target="GSM8K">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Tokenization" target="Inference">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Tokenization" target="Claude">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Tokenization" target="GPT-4">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Tokenization" target="Big-Bench">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Tokenization" target="DeepSeek">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Tokenization" target="Grok">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Tokenization" target="Mistral">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Compute" target="Training">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="Compute" target="LLM">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Compute" target="Inference">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Compute" target="Big-Bench">
+      <data key="d0">14</data>
+    </edge>
+    <edge source="Compute" target="GSM8K">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Compute" target="IPO">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Compute" target="Microsoft">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Compute" target="AGI">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Compute" target="ARC">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Compute" target="Funding">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Compute" target="Claude">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Compute" target="xAI">
+      <data key="d0">13</data>
+    </edge>
+    <edge source="Compute" target="OpenAI">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="Compute" target="DeepMind">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Compute" target="MMLU">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Compute" target="NVIDIA">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Compute" target="ASI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Compute" target="Enterprise AI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Compute" target="DeepSeek">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Compute" target="Startup">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Compute" target="GPT-4">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Compute" target="Open Source">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Compute" target="Midjourney">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Compute" target="RLHF">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Compute" target="Gemini">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Compute" target="Scaling Laws">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Training" target="GPU">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="Training" target="Midjourney">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Training" target="Mistral AI">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Training" target="Enterprise AI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Training" target="Claude">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="Training" target="RAG">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Training" target="LLM">
+      <data key="d0">16</data>
+    </edge>
+    <edge source="Training" target="Big-Bench">
+      <data key="d0">18</data>
+    </edge>
+    <edge source="Training" target="OpenAI">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Training" target="Inference">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Training" target="NVIDIA">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Training" target="Mistral">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Training" target="RLHF">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="Training" target="GSM8K">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Training" target="Scaling Laws">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Training" target="Anthropic">
+      <data key="d0">14</data>
+    </edge>
+    <edge source="Training" target="Gemini">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Training" target="DeepSeek">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Training" target="xAI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Training" target="GPT-4">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Training" target="Startup">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Training" target="Foundation Model">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Training" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Training" target="AGI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Training" target="Meta">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Training" target="DeepMind">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Training" target="Hugging Face">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Training" target="Google">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Training" target="Open Source">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Training" target="ASI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="OpenAI">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Anthropic" target="Big-Bench">
+      <data key="d0">23</data>
+    </edge>
+    <edge source="Anthropic" target="Open Source">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="Mistral AI">
+      <data key="d0">19</data>
+    </edge>
+    <edge source="Anthropic" target="Mistral">
+      <data key="d0">21</data>
+    </edge>
+    <edge source="Anthropic" target="Gemini">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Anthropic" target="Inference">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Anthropic" target="Claude">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="Anthropic" target="GSM8K">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Anthropic" target="Grok">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="Anthropic" target="Google">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="AGI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Anthropic" target="Scaling Laws">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Anthropic" target="DeepSeek">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Anthropic" target="Midjourney">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Anthropic" target="Enterprise AI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Anthropic" target="RLHF">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="Prompt Engineering">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="Venture Capital">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="LLM">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Anthropic" target="GPT-4">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="NVIDIA">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="Startup">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="Foundation Model">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="DeepMind">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Anthropic" target="xAI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="OpenAI" target="Big-Bench">
+      <data key="d0">8</data>
+    </edge>
+    <edge source="OpenAI" target="Open Source">
+      <data key="d0">10</data>
+    </edge>
+    <edge source="OpenAI" target="Meta">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="OpenAI" target="Inference">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="OpenAI" target="GPU">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="OpenAI" target="Claude">
+      <data key="d0">9</data>
+    </edge>
+    <edge source="OpenAI" target="Startup">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="OpenAI" target="DeepMind">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="OpenAI" target="Gemini">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="OpenAI" target="MMLU">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="OpenAI" target="RLHF">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="OpenAI" target="Enterprise AI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="OpenAI" target="Midjourney">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="OpenAI" target="AGI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="OpenAI" target="GPT-4">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Big-Bench" target="Open Source">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Big-Bench" target="Venture Capital">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Big-Bench" target="Enterprise AI">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Big-Bench" target="DeepMind">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Big-Bench" target="GSM8K">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Big-Bench" target="Mistral">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Big-Bench" target="xAI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Big-Bench" target="DeepSeek">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Big-Bench" target="Gemini">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Big-Bench" target="AGI">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Big-Bench" target="ARC">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Big-Bench" target="Google">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Big-Bench" target="Foundation Model">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Big-Bench" target="Claude">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Big-Bench" target="Inference">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Big-Bench" target="LLM">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="Big-Bench" target="RLHF">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Big-Bench" target="Prompt Engineering">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Big-Bench" target="Meta">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Big-Bench" target="Mistral AI">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Big-Bench" target="Grok">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Big-Bench" target="Startup">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Big-Bench" target="Scaling Laws">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Big-Bench" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Big-Bench" target="Midjourney">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Big-Bench" target="GPT-4">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Big-Bench" target="Funding">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Big-Bench" target="GPU">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Big-Bench" target="NVIDIA">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Big-Bench" target="ASI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Open Source" target="Claude">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Open Source" target="AGI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Open Source" target="Inference">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Open Source" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Open Source" target="Foundation Model">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Open Source" target="xAI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Open Source" target="GPT-4">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Open Source" target="LLM">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Open Source" target="GPU">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="LLM" target="Inference">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="LLM" target="Mistral AI">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="LLM" target="Grok">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="LLM" target="DeepSeek">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="LLM" target="GSM8K">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="LLM" target="RLHF">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="LLM" target="Scaling Laws">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="LLM" target="Mistral">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="LLM" target="Prompt Engineering">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="LLM" target="GPT-4">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="LLM" target="GPU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="LLM" target="Gemini">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="LLM" target="NVIDIA">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="LLM" target="Claude">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Inference" target="GPU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Inference" target="Mistral AI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Inference" target="Foundation Model">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Inference" target="RLHF">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Inference" target="Mistral">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Inference" target="NVIDIA">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Inference" target="GPT-4">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Venture Capital" target="Enterprise AI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Venture Capital" target="DeepMind">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Venture Capital" target="Startup">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Venture Capital" target="Meta">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Venture Capital" target="Claude">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Venture Capital" target="Funding">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Enterprise AI" target="DeepMind">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Enterprise AI" target="Mistral AI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Enterprise AI" target="Midjourney">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Enterprise AI" target="AGI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Enterprise AI" target="RLHF">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Enterprise AI" target="Microsoft">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="DeepMind" target="DeepSeek">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="DeepMind" target="Claude">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="DeepMind" target="Startup">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="DeepMind" target="Google">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="DeepMind" target="Foundation Model">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="DeepMind" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="DeepMind" target="RLHF">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="GSM8K" target="Claude">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="GSM8K" target="AGI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="GSM8K" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="GSM8K" target="Foundation Model">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Mistral AI" target="Mistral">
+      <data key="d0">15</data>
+    </edge>
+    <edge source="Mistral AI" target="Gemini">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Mistral AI" target="Midjourney">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Mistral AI" target="Grok">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Mistral AI" target="DeepSeek">
+      <data key="d0">7</data>
+    </edge>
+    <edge source="Mistral AI" target="Claude">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Mistral AI" target="GPT-4">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Mistral AI" target="AGI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Mistral AI" target="Scaling Laws">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Mistral AI" target="Prompt Engineering">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Mistral AI" target="RLHF">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Mistral" target="Gemini">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Mistral" target="RLHF">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Mistral" target="Claude">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="Mistral" target="DeepSeek">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Mistral" target="Midjourney">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Mistral" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Mistral" target="Grok">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="Mistral" target="Prompt Engineering">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Mistral" target="Scaling Laws">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Mistral" target="AGI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="GPU" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="GPU" target="RLHF">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="GPU" target="Midjourney">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="GPU" target="Claude">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="DeepSeek" target="Grok">
+      <data key="d0">5</data>
+    </edge>
+    <edge source="DeepSeek" target="Midjourney">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="DeepSeek" target="xAI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="DeepSeek" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="DeepSeek" target="Scaling Laws">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="DeepSeek" target="Funding">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Gemini" target="AGI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Gemini" target="ARC">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Gemini" target="Grok">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Gemini" target="Google">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Gemini" target="Claude">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Gemini" target="ASI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Gemini" target="Foundation Model">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Midjourney" target="RAG">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Midjourney" target="Grok">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Midjourney" target="xAI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Midjourney" target="Claude">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Midjourney" target="Scaling Laws">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="xAI" target="Foundation Model">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="xAI" target="AGI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Scaling Laws" target="Claude">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Claude" target="AGI">
+      <data key="d0">6</data>
+    </edge>
+    <edge source="Claude" target="ASI">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Claude" target="Startup">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Claude" target="GPT-4">
+      <data key="d0">3</data>
+    </edge>
+    <edge source="Claude" target="Funding">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Claude" target="MMLU">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Claude" target="Prompt Engineering">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Claude" target="RLHF">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Claude" target="Grok">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Meta" target="Startup">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AGI" target="ARC">
+      <data key="d0">4</data>
+    </edge>
+    <edge source="AGI" target="Funding">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="AGI" target="ASI">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="AGI" target="GPT-4">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Funding" target="ARC">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Funding" target="Startup">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Google" target="Foundation Model">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Foundation Model" target="MMLU">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="Foundation Model" target="Startup">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="ASI" target="NVIDIA">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="Grok" target="RLHF">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="MMLU" target="RLHF">
+      <data key="d0">2</data>
+    </edge>
+    <edge source="RLHF" target="GPT-4">
+      <data key="d0">1</data>
+    </edge>
+    <edge source="RLHF" target="Startup">
+      <data key="d0">1</data>
+    </edge>
+  </graph>
+</graphml>
