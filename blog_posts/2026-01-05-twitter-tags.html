@@ -1,0 +1,653 @@
+<!DOCTYPE HTML>
+<html lang="en" data-theme="light">
+
+<head>
+    <title>Visualizing Twitter Tags with Sigma.js - James E. T. Smith, Ph.D.</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="Interactive network graph of Twitter tags using Sigma.js." />
+    <meta name="keywords" content="sigma.js visualization graph" />
+    <link rel="stylesheet" href="../assets/css/minimal.css" />
+    <link rel="icon" href="../images/k4_planar.svg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <!-- Graphology and Sigma -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
+
+<!-- Graphology Library (includes Layouts) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/graphology-library/0.8.0/graphology-library.min.js"></script>
+
+<!-- Twitter Widgets -->
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<style>
+    /* Graph Specific Styles */
+    #sigma-wrapper {
+        display: flex;
+        height: 700px;
+        border: 1px solid #ddd;
+        margin: 20px 0;
+        position: relative;
+        overflow: hidden;
+        background: white;
+        /* Ensure background is white for graph */
+    }
+
+    #controls-container {
+        width: 300px;
+        padding: 10px;
+        background: #f9f9f9;
+        border-right: 1px solid #ddd;
+        height: 100%;
+        overflow-y: auto;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        z-index: 20;
+        color: #333;
+        /* Ensure text is visible in dark mode if mixed */
+    }
+
+    #graph-container {
+        flex-grow: 1;
+        position: relative;
+        height: 100%;
+    }
+
+    #controls {
+        margin-bottom: 20px;
+    }
+
+    #controls button {
+        margin-bottom: 5px;
+        width: 100%;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    #sigma-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    #tooltip {
+        position: absolute;
+        display: none;
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 4px;
+        pointer-events: none;
+        z-index: 1000;
+        color: #333;
+        /* Ensure tooltip text is visible */
+    }
+
+    /* Legend Styles */
+    #legend {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        cursor: pointer;
+        padding: 2px 5px;
+        border-radius: 4px;
+    }
+
+    .legend-item:hover {
+        background-color: #eee;
+    }
+
+    .legend-item.active {
+        background-color: #ddd;
+        font-weight: bold;
+    }
+
+    .legend-color {
+        width: 12px;
+        height: 12px;
+        margin-right: 8px;
+        border-radius: 2px;
+    }
+
+    .legend-label {
+        color: #333;
+    }
+
+    #show-all-btn {
+        margin-top: 10px;
+        width: 100%;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    /* Tweet List Styles */
+    #tweet-list-container {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+        margin-top: 10px;
+        min-height: 200px;
+    }
+
+    #tweet-list {
+        overflow-y: auto;
+        flex-grow: 1;
+    }
+
+    .tweet-link {
+        display: block;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 13px;
+        text-decoration: none;
+        color: #0066cc;
+        padding: 2px;
+    }
+
+    .tweet-link:hover {
+        text-decoration: underline;
+        background-color: #e6f0ff;
+    }
+
+    /* Tweet Preview Styles */
+    #tweet-preview {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 300px;
+        max-height: 80vh;
+        overflow-y: auto;
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 10px;
+        z-index: 100;
+        display: none;
+    }
+
+    #tweet-preview h4 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #666;
+    }
+
+    /* Dark mode overrides for graph if needed */
+    [data-theme="dark"] #controls-container,
+    [data-theme="dark"] #tooltip,
+    [data-theme="dark"] #tweet-preview {
+        background: #2d2d2d;
+        border-color: #444;
+        color: #eee;
+    }
+
+    [data-theme="dark"] .legend-item:hover {
+        background-color: #444;
+    }
+
+    [data-theme="dark"] .legend-item.active {
+        background-color: #555;
+    }
+
+    [data-theme="dark"] .legend-label {
+        color: #eee;
+    }
+
+    [data-theme="dark"] .tweet-link {
+        color: #66b3ff;
+    }
+
+    [data-theme="dark"] .tweet-link:hover {
+        background-color: #333;
+    }
+
+    [data-theme="dark"] #sigma-wrapper {
+        border-color: #444;
+    }
+</style>
+
+    
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-container">
+                <div class="header-content">
+                    <h1>James E. T. Smith, Ph.D.</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="../index.html#about">About</a></li>
+                            <li><a href="../index.html#software">Software</a></li>
+                            <li><a href="../publications.html">Publications</a></li>
+                            <li><a href="../index.html#talks">Talks</a></li>
+                            <li><a href="../blog.html" class="active">Blog</a></li>
+                            <li><a href="../index.html#contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header-image">
+                    <img src="../images/headshot_small.png" alt="James E. T. Smith" />
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <article class="blog-post-content">
+                <header class="post-header">
+                    <h2>Visualizing Twitter Tags with Sigma.js</h2>
+                    <div class="post-meta">
+                        <time datetime="2026-01-05">January 5, 2026</time>
+                        <div class="post-tags">
+                            
+                            <span class="tag">sigma.js</span>
+                            
+                            <span class="tag">visualization</span>
+                            
+                            <span class="tag">graph</span>
+                            
+                        </div>
+                    </div>
+                </header>
+
+                <section class="post-section">
+                    <p>Below is an interactive network graph visualizing Twitter tags and their relationships. Use the controls on the left to filter categories or change the layout. Hover over nodes to see connected tweets and hover over tweets on the left pannel to see an inset preview of the tweets.</p>
+<div id="sigma-wrapper">
+    <div id="controls-container">
+        <h3>Controls</h3>
+        <div id="controls">
+            <button id="layout-random">Random Layout</button>
+            <button id="layout-circular">Circular Layout</button>
+        </div>
+
+        <h3>Categories</h3>
+        <div id="legend"></div>
+        <button id="show-all-btn">Show All</button>
+
+        <div id="tweet-list-container">
+            <h3>Tweets for Tag</h3>
+            <div id="tweet-list">
+                <p>Hover over a node to see tweets.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="graph-container">
+        <div id="sigma-container"></div>
+        <div id="tooltip"></div>
+        <div id="tweet-preview">
+            <h4>Tweet Preview</h4>
+            <div id="tweet-embed"></div>
+        </div>
+    </div>
+</div>
+                </section>
+            </article>
+
+            <div class="post-navigation">
+                <a href="../blog.html" class="button"><i class="fas fa-arrow-left"></i> Back to All Posts</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; James E. T. Smith, Ph.D.</p>
+        </footer>
+    </div>
+
+    <!-- Theme toggle button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Theme toggle script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+            const themeIcon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference or use device preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            // Set initial theme
+            if (savedTheme) {
+                htmlElement.setAttribute('data-theme', savedTheme);
+                updateThemeIcon(savedTheme);
+            } else if (prefersDark) {
+                htmlElement.setAttribute('data-theme', 'dark');
+                updateThemeIcon('dark');
+            }
+
+            // Toggle theme when button is clicked
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+
+            // Update icon based on current theme
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            }
+        });
+    </script>
+    
+    <!-- Graph Logic -->
+<script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Load the graph data
+        // Updated path to point to the subdirectory
+        fetch('2026_01_05/graph_data.json')
+            .then(response => response.json())
+            .then(data => {
+
+                // Create a new Graphology graph
+                const graph = new graphology.Graph();
+
+                // Track categories and their colors
+                const categories = new Map();
+
+                // Import data manually
+                data.nodes.forEach(node => {
+                    graph.addNode(node.id, {
+                        label: node.label,
+                        x: typeof node.x === 'number' ? node.x : Math.random(),
+                        y: typeof node.y === 'number' ? node.y : Math.random(),
+                        size: 1,
+                        color: node.color,
+                        originalColor: node.color,
+                        category: node.category
+                    });
+
+                    // Collect unique categories
+                    if (node.category && !categories.has(node.category)) {
+                        categories.set(node.category, node.color);
+                    }
+                });
+
+                data.edges.forEach(edge => {
+                    if (!graph.hasEdge(edge.source, edge.target)) {
+                        graph.addEdge(edge.source, edge.target, {
+                            size: edge.size,
+                            color: edge.color,
+                            originalColor: edge.color,
+                            tweet_link: edge.tweet_link
+                        });
+                    }
+                });
+
+                // Update node sizes based on degree
+                graph.forEachNode((node, attributes) => {
+                    const degree = graph.degree(node);
+                    graph.setNodeAttribute(node, 'size', 3 + Math.sqrt(degree) * 2);
+                });
+
+                // Create the sigma instance
+                const container = document.getElementById('sigma-container');
+                const tooltip = document.getElementById('tooltip');
+                const tweetList = document.getElementById('tweet-list');
+                const tweetListHeader = document.querySelector('#tweet-list-container h3');
+                const tweetPreview = document.getElementById('tweet-preview');
+                const tweetEmbed = document.getElementById('tweet-embed');
+
+                const renderer = new Sigma(graph, container, {
+                    enableEdgeEvents: true,
+                    edgeHoverColor: '#888',
+                    edgeHoverSizeRatio: 2,
+                    labelRenderedSizeThreshold: 6
+                });
+
+                // --- Layout Logic ---
+
+                const randomLayout = () => {
+                    graph.forEachNode(node => {
+                        graph.setNodeAttribute(node, 'x', Math.random());
+                        graph.setNodeAttribute(node, 'y', Math.random());
+                    });
+                };
+
+                const circularLayout = () => {
+                    if (window.graphologyLibrary && window.graphologyLibrary.layout && window.graphologyLibrary.layout.circular) {
+                        window.graphologyLibrary.layout.circular.assign(graph);
+                    } else {
+                        const nodes = graph.nodes();
+                        const radius = 10;
+                        nodes.forEach((node, i) => {
+                            const angle = (i * 2 * Math.PI) / nodes.length;
+                            graph.setNodeAttribute(node, 'x', radius * Math.cos(angle));
+                            graph.setNodeAttribute(node, 'y', radius * Math.sin(angle));
+                        });
+                    }
+                };
+
+                document.getElementById('layout-random').addEventListener('click', randomLayout);
+                document.getElementById('layout-circular').addEventListener('click', circularLayout);
+
+                // --- Legend & Filtering Logic ---
+
+                const legendContainer = document.getElementById('legend');
+                let activeCategory = null;
+
+                // Build Legend
+                categories.forEach((color, category) => {
+                    const item = document.createElement('div');
+                    item.className = 'legend-item';
+                    item.innerHTML = `<div class="legend-color" style="background-color: ${color}"></div><span class="legend-label">${category}</span>`;
+
+                    item.addEventListener('click', () => {
+                        // Toggle category
+                        if (activeCategory === category) {
+                            activeCategory = null;
+                            item.classList.remove('active');
+                        } else {
+                            activeCategory = category;
+                            // Update UI
+                            document.querySelectorAll('.legend-item').forEach(el => el.classList.remove('active'));
+                            item.classList.add('active');
+                        }
+                        renderer.refresh();
+                    });
+
+                    legendContainer.appendChild(item);
+                });
+
+                document.getElementById('show-all-btn').addEventListener('click', () => {
+                    activeCategory = null;
+                    document.querySelectorAll('.legend-item').forEach(el => el.classList.remove('active'));
+                    renderer.refresh();
+                });
+
+
+                // --- Interaction Logic (Hover + Filter + Tweet List) ---
+
+                let hoveredNode = undefined;
+                let hoveredNeighbors = undefined;
+
+                // Helper to get tweet ID
+                const getTweetId = (url) => {
+                    if (!url) return null;
+                    const match = url.match(/status\/(\d+)/);
+                    return match ? match[1] : null;
+                };
+
+                renderer.on("enterNode", ({ node }) => {
+                    hoveredNode = node;
+                    hoveredNeighbors = new Set(graph.neighbors(node));
+
+                    // Populate Tweet List
+                    const nodeLabel = graph.getNodeAttribute(node, 'label');
+                    tweetListHeader.textContent = `Tweets for "${nodeLabel}"`;
+                    tweetList.innerHTML = '';
+
+                    const links = new Set();
+                    graph.forEachEdge(node, (edge, attributes, source, target) => {
+                        if (attributes.tweet_link) {
+                            links.add(attributes.tweet_link);
+                        }
+                    });
+
+                    if (links.size > 0) {
+                        links.forEach(link => {
+                            const a = document.createElement('a');
+                            a.href = link;
+                            a.target = '_blank';
+                            a.className = 'tweet-link';
+                            a.textContent = link;
+
+                            // Hover listener for tweet preview
+                            a.addEventListener('mouseenter', () => {
+                                const tweetId = getTweetId(link);
+                                if (tweetId && window.twttr) {
+                                    tweetPreview.style.display = 'block';
+                                    tweetEmbed.innerHTML = 'Loading...';
+
+                                    // Use Twitter Widgets to create tweet
+                                    window.twttr.widgets.createTweet(
+                                        tweetId,
+                                        tweetEmbed,
+                                        {
+                                            theme: 'light',
+                                            width: 250
+                                        }
+                                    ).then(el => {
+                                        if (!el) tweetEmbed.innerHTML = 'Tweet not found.';
+                                        else {
+                                            // Remove loading text if it's still there (the widget replaces content usually, but safety first)
+                                            if (tweetEmbed.firstChild.nodeType === 3) tweetEmbed.firstChild.remove();
+                                        }
+                                    });
+                                }
+                            });
+
+                            // Optional: Hide preview on mouseleave? 
+                            // Or keep it until another is hovered. 
+                            // Let's hide on list leave or explicit leave.
+
+                            tweetList.appendChild(a);
+                        });
+                    } else {
+                        tweetList.innerHTML = '<p>No linked tweets found.</p>';
+                    }
+
+                    renderer.refresh();
+                });
+
+                renderer.on("leaveNode", () => {
+                    hoveredNode = undefined;
+                    hoveredNeighbors = undefined;
+                    renderer.refresh();
+                });
+
+                // Hide tweet preview when leaving the list or clicking elsewhere
+                tweetList.addEventListener('mouseleave', () => {
+                    tweetPreview.style.display = 'none';
+                    tweetEmbed.innerHTML = '';
+                });
+
+
+                renderer.setSetting("nodeReducer", (node, data) => {
+                    const res = { ...data };
+
+                    // 1. Filtering Check
+                    if (activeCategory && res.category !== activeCategory) {
+                        res.hidden = true;
+                        res.label = "";
+                        return res;
+                    }
+
+                    // 2. Hover Check
+                    if (hoveredNode && node !== hoveredNode && !hoveredNeighbors.has(node)) {
+                        res.label = "";
+                        res.color = "#f6f6f6";
+                        res.zIndex = 0;
+                    } else if (hoveredNode) {
+                        res.zIndex = 10;
+                    }
+
+                    return res;
+                });
+
+                renderer.setSetting("edgeReducer", (edge, data) => {
+                    const res = { ...data };
+
+                    // 1. Filtering Check
+                    if (activeCategory) {
+                        const sourceCat = graph.getNodeAttribute(graph.source(edge), 'category');
+                        const targetCat = graph.getNodeAttribute(graph.target(edge), 'category');
+                        if (sourceCat !== activeCategory || targetCat !== activeCategory) {
+                            res.hidden = true;
+                            return res;
+                        }
+                    }
+
+                    // 2. Hover Check
+                    if (hoveredNode && !graph.hasExtremity(edge, hoveredNode)) {
+                        res.hidden = true;
+                    }
+                    return res;
+                });
+
+                // --- Tooltip Logic (Edges) ---
+
+                renderer.on('enterEdge', (event) => {
+                    const edgeId = event.edge;
+                    const attributes = graph.getEdgeAttributes(edgeId);
+                    if (attributes.tweet_link) {
+                        tooltip.style.display = 'block';
+                        tooltip.innerHTML = `<a href="${attributes.tweet_link}" target="_blank">View Tweet</a>`;
+                    }
+                });
+
+                container.addEventListener('mousemove', (e) => {
+                    if (tooltip.style.display === 'block') {
+                        const rect = container.getBoundingClientRect();
+                        tooltip.style.left = (e.clientX - rect.left + 15) + 'px';
+                        tooltip.style.top = (e.clientY - rect.top + 15) + 'px';
+                    }
+                });
+
+                renderer.on('leaveEdge', () => {
+                    tooltip.style.display = 'none';
+                });
+
+            })
+            .catch(error => console.error('Error loading or parsing graph data:', error));
+    });
+</script>
+
+    
+</body>
+
+</html>

@@ -1,25 +1,9 @@
-<!DOCTYPE HTML>
-<html lang="en" data-theme="light">
-
-<head>
-    <title>Visualizing Twitter Tags with Sigma.js - James E. T. Smith, Ph.D.</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <meta name="description" content="Interactive network graph of Twitter tags using Sigma.js." />
-    <meta name="keywords" content="sigma.js graph visualization network twitter tags" />
-    <link rel="stylesheet" href="../assets/css/minimal.css" />
-    <link rel="icon" href="../images/k4_planar.svg">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Syntax Highlighting -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-
+---
+title: Visualizing Twitter Tags with Sigma.js
+date: 2026-01-05
+tags: [sigma.js, visualization, graph]
+excerpt: Interactive network graph of Twitter tags using Sigma.js.
+extra_head: |
     <!-- Graphology and Sigma -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
@@ -91,6 +75,7 @@
             pointer-events: none;
             z-index: 1000;
             color: #333;
+            /* Ensure tooltip text is visible */
         }
 
         /* Legend Styles */
@@ -225,142 +210,7 @@
             border-color: #444;
         }
     </style>
-</head>
-
-<body>
-    <div class="container">
-        <header>
-            <div class="header-container">
-                <div class="header-content">
-                    <h1>James E. T. Smith, Ph.D.</h1>
-                    <nav>
-                        <ul>
-                            <li><a href="../index.html#about">About</a></li>
-                            <li><a href="../index.html#software">Software</a></li>
-                            <li><a href="../publications.html">Publications</a></li>
-                            <li><a href="../index.html#talks">Talks</a></li>
-                            <li><a href="../blog.html" class="active">Blog</a></li>
-                            <li><a href="../index.html#contact">Contact</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="header-image">
-                    <img src="../images/headshot_small.png" alt="James E. T. Smith" />
-                </div>
-            </div>
-        </header>
-
-        <main>
-            <article class="blog-post-content">
-                <header class="post-header">
-                    <h2>Visualizing Twitter Tags with Sigma.js</h2>
-                    <div class="post-meta">
-                        <time datetime="2026-01-05">January 5, 2026</time>
-                        <div class="post-tags">
-                            <span class="tag">sigma.js</span>
-                            <span class="tag">visualization</span>
-                            <span class="tag">graph</span>
-                        </div>
-                    </div>
-                </header>
-
-                <section class="post-section">
-                    <p>Below is an interactive network graph visualizing Twitter tags and their relationships. Use the
-                        controls on the left to filter categories or change the layout. Hover over nodes to see
-                        connected tweets and hover over tweets on the left pannel to see an inset preview of the tweets.
-                    </p>
-
-                    <div id="sigma-wrapper">
-                        <div id="controls-container">
-                            <h3>Controls</h3>
-                            <div id="controls">
-                                <button id="layout-random">Random Layout</button>
-                                <button id="layout-circular">Circular Layout</button>
-                            </div>
-
-                            <h3>Categories</h3>
-                            <div id="legend"></div>
-                            <button id="show-all-btn">Show All</button>
-
-                            <div id="tweet-list-container">
-                                <h3>Tweets for Tag</h3>
-                                <div id="tweet-list">
-                                    <p>Hover over a node to see tweets.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="graph-container">
-                            <div id="sigma-container"></div>
-                            <div id="tooltip"></div>
-                            <div id="tweet-preview">
-                                <h4>Tweet Preview</h4>
-                                <div id="tweet-embed"></div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </article>
-
-            <div class="post-navigation">
-                <a href="../blog.html" class="button"><i class="fas fa-arrow-left"></i> Back to All Posts</a>
-            </div>
-        </main>
-
-        <footer>
-            <p>&copy; James E. T. Smith, Ph.D.</p>
-        </footer>
-    </div>
-
-    <!-- Theme toggle button -->
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-        <i class="fas fa-moon"></i>
-    </button>
-
-    <!-- Theme toggle script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Theme toggle functionality
-            const themeToggle = document.getElementById('theme-toggle');
-            const htmlElement = document.documentElement;
-            const themeIcon = themeToggle.querySelector('i');
-
-            // Check for saved theme preference or use device preference
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            // Set initial theme
-            if (savedTheme) {
-                htmlElement.setAttribute('data-theme', savedTheme);
-                updateThemeIcon(savedTheme);
-            } else if (prefersDark) {
-                htmlElement.setAttribute('data-theme', 'dark');
-                updateThemeIcon('dark');
-            }
-
-            // Toggle theme when button is clicked
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = htmlElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-                htmlElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                updateThemeIcon(newTheme);
-            });
-
-            // Update icon based on current theme
-            function updateThemeIcon(theme) {
-                if (theme === 'dark') {
-                    themeIcon.classList.remove('fa-moon');
-                    themeIcon.classList.add('fa-sun');
-                } else {
-                    themeIcon.classList.remove('fa-sun');
-                    themeIcon.classList.add('fa-moon');
-                }
-            }
-        });
-    </script>
-
+extra_scripts: |
     <!-- Graph Logic -->
     <script defer>
         document.addEventListener('DOMContentLoaded', () => {
@@ -643,6 +493,37 @@
                 .catch(error => console.error('Error loading or parsing graph data:', error));
         });
     </script>
-</body>
+---
 
-</html>
+Below is an interactive network graph visualizing Twitter tags and their relationships. Use the controls on the left to filter categories or change the layout. Hover over nodes to see connected tweets and hover over tweets on the left pannel to see an inset preview of the tweets.
+
+<div id="sigma-wrapper">
+    <div id="controls-container">
+        <h3>Controls</h3>
+        <div id="controls">
+            <button id="layout-random">Random Layout</button>
+            <button id="layout-circular">Circular Layout</button>
+        </div>
+
+        <h3>Categories</h3>
+        <div id="legend"></div>
+        <button id="show-all-btn">Show All</button>
+
+        <div id="tweet-list-container">
+            <h3>Tweets for Tag</h3>
+            <div id="tweet-list">
+                <p>Hover over a node to see tweets.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="graph-container">
+        <div id="sigma-container"></div>
+        <div id="tooltip"></div>
+        <div id="tweet-preview">
+            <h4>Tweet Preview</h4>
+            <div id="tweet-embed"></div>
+        </div>
+    </div>
+</div>
+

@@ -174,10 +174,11 @@
 	</button>
 
 	<!-- Theme toggle script -->
+    <script src="assets/js/blog_data.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
-			// Blog posts will be loaded from JSON file
-			let blogPosts = [];
+			// Blog posts will be loaded from global variable
+			let blogPosts = window.blogPosts || [];
 
 			// Function to display blog posts
 			function displayBlogPosts() {
@@ -221,25 +222,8 @@
 				});
 			}
 
-			// Load blog posts from JSON file
-			fetch('blog_metadata.json')
-				.then(response => {
-					if (!response.ok) {
-						throw new Error('Failed to load blog metadata');
-					}
-					return response.json();
-				})
-				.then(data => {
-					blogPosts = data;
-					displayBlogPosts();
-				})
-				.catch(error => {
-					console.error('Error loading blog posts:', error);
-					const blogPostsContainer = document.getElementById('blog-posts');
-					if (blogPostsContainer) {
-						blogPostsContainer.innerHTML = '<p>No blog posts available.</p>';
-					}
-				});
+            // Display blog posts
+            displayBlogPosts();
 
 			// Theme toggle functionality
 			const themeToggle = document.getElementById('theme-toggle');

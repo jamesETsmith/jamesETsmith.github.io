@@ -70,30 +70,15 @@
     </button>
 
     <!-- Script to load blog posts and handle theme toggle -->
+    <script src="assets/js/blog_data.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Blog posts will be loaded from JSON file
-            let blogPosts = [];
+            // Blog posts will be loaded from global variable
+            let blogPosts = window.blogPosts || [];
             
-            // Load blog posts from JSON file
-            fetch('blog_metadata.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to load blog metadata');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    blogPosts = data;
-                    // Initialize the blog page after loading posts
-                    displayAllBlogPosts();
-                    populateTagFilters();
-                })
-                .catch(error => {
-                    console.error('Error loading blog posts:', error);
-                    document.getElementById('all-blog-posts').innerHTML = 
-                        '<p class="no-results">Error loading blog posts. Please run generate_blog_metadata.py to generate the metadata file.</p>';
-                });
+            // Initialize the blog page
+            displayAllBlogPosts();
+            populateTagFilters();
 
             // Function to display all blog posts
             function displayAllBlogPosts(posts = blogPosts) {

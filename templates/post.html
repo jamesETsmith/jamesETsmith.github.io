@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html lang="en" data-theme="light">
+
+<head>
+    <title>{{ title }} - James E. T. Smith, Ph.D.</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="{{ excerpt }}" />
+    <meta name="keywords" content="{{ tags|join(' ') }}" />
+    <link rel="stylesheet" href="../assets/css/minimal.css" />
+    <link rel="icon" href="../images/k4_planar.svg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    {% if extra_head %}
+    {{ extra_head }}
+    {% endif %}
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-container">
+                <div class="header-content">
+                    <h1>James E. T. Smith, Ph.D.</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="../index.html#about">About</a></li>
+                            <li><a href="../index.html#software">Software</a></li>
+                            <li><a href="../publications.html">Publications</a></li>
+                            <li><a href="../index.html#talks">Talks</a></li>
+                            <li><a href="../blog.html" class="active">Blog</a></li>
+                            <li><a href="../index.html#contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header-image">
+                    <img src="../images/headshot_small.png" alt="James E. T. Smith" />
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <article class="blog-post-content">
+                <header class="post-header">
+                    <h2>{{ title }}</h2>
+                    <div class="post-meta">
+                        <time datetime="{{ date }}">{{ date_display }}</time>
+                        <div class="post-tags">
+                            {% for tag in tags %}
+                            <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </header>
+
+                <section class="post-section">
+                    {{ content }}
+                </section>
+            </article>
+
+            <div class="post-navigation">
+                <a href="../blog.html" class="button"><i class="fas fa-arrow-left"></i> Back to All Posts</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; James E. T. Smith, Ph.D.</p>
+        </footer>
+    </div>
+
+    <!-- Theme toggle button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Theme toggle script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+            const themeIcon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference or use device preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            // Set initial theme
+            if (savedTheme) {
+                htmlElement.setAttribute('data-theme', savedTheme);
+                updateThemeIcon(savedTheme);
+            } else if (prefersDark) {
+                htmlElement.setAttribute('data-theme', 'dark');
+                updateThemeIcon('dark');
+            }
+
+            // Toggle theme when button is clicked
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+
+            // Update icon based on current theme
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            }
+        });
+    </script>
+    {% if extra_scripts %}
+    {{ extra_scripts }}
+    {% endif %}
+</body>
+
+</html>
+

@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: jamesetsmith-github-io
+Version: 0.1.0
+Summary: Blog generator for James E. T. Smith's website
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: jinja2
+Requires-Dist: markdown
+Requires-Dist: python-frontmatter
+Dynamic: license-file
+
+# Personal Website
+
+Serve locally with:
+
+```shell
+python3 -m http.server 8888
+```
+
+## License
+
+Apache Version 2.0
+
+See [LICENSE](LICENSE).

@@ -1,0 +1,8 @@
+LICENSE
+README.md
+pyproject.toml
+jamesetsmith_github_io.egg-info/PKG-INFO
+jamesetsmith_github_io.egg-info/SOURCES.txt
+jamesetsmith_github_io.egg-info/dependency_links.txt
+jamesetsmith_github_io.egg-info/requires.txt
+jamesetsmith_github_io.egg-info/top_level.txt

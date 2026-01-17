@@ -5,9 +5,8 @@
     <title>DIY Cluster and Distributed Building Machine - James E. T. Smith, Ph.D.</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <meta name="description"
-        content="While I'm out on parental leave, I don't have access to my work cluster. Since I still want to build larger software projects in a reasonable amount of time, I decided to try and hook up several old computers I had lying around." />
-    <meta name="keywords" content="sccache,HPC,distributed building,cluster" />
+    <meta name="description" content="While I'm out on parental leave, I don't have access to my work cluster. Since I still want to build larger software projects in a reasonable amount of time, I decided to try and hook up several old computers I had lying around." />
+    <meta name="keywords" content="sccache HPC" />
     <link rel="stylesheet" href="../assets/css/minimal.css" />
     <link rel="icon" href="../images/k4_planar.svg">
     <!-- Google Fonts -->
@@ -20,6 +19,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+    
 </head>
 
 <body>
@@ -52,158 +52,132 @@
                     <div class="post-meta">
                         <time datetime="2025-12-03">December 3, 2025</time>
                         <div class="post-tags">
+                            
                             <span class="tag">sccache</span>
+                            
                             <span class="tag">HPC</span>
+                            
                         </div>
                     </div>
                 </header>
 
                 <section class="post-section">
-                    <p>While I'm out on parental leave, I don't have access to my work cluster. Since I still want to
-                        build larger software projects in a reasonable amount of time, I decided to try and hook up
-                        several old computers I had lying around.</p>
-                </section>
-
-                <section class="post-section">
-                    <h1>The Plan</h1>
-                    <em>The goal of this little project is just to speed up how fast I can build larger software
-                        projects (e.g. LLVM).</em>
-
-                    <br><br>
-
-                    <ol>
-                        <li>Compile time on a single computer</li>
-                        <li>Compile time on multiple computers connected via Ethernet</li>
-                        <li>Maybe setup slurm? (tbd on this since it's not necessary for my goal)</li>
-                    </ol>
-
-                    <br>
-
-                    <p>While I'm hoping to use this on projects the size of LLVM and PyTorch, for this I'm going to
-                        target a smaller project so I can iterate quickly.</p>
-                </section>
-
-                <section class="post-section">
-
-                    <h1>Setting up static IP Addresses for the Machines</h1>
-
-                    <p>Initially, I tried to set static IP addresses through the router, but the MAC address
-                        randomization made this a pain. So instead I created a script to setup the IP addresses on each
-                        machine.
-                    </p>
-
-                    <pre><code class="bash">#!/bin/bash
+                    <p>While I'm out on parental leave, I don't have access to my work cluster. Since I still want to build larger software projects in a reasonable amount of time, I decided to try and hook up several old computers I had lying around.</p>
+<h1>The Plan</h1>
+<p><em>The goal of this little project is just to speed up how fast I can build larger software projects (e.g. LLVM).</em></p>
+<ol>
+<li>Compile time on a single computer</li>
+<li>Compile time on multiple computers connected via Ethernet</li>
+<li>Maybe setup slurm? (tbd on this since it's not necessary for my goal)</li>
+</ol>
+<p>While I'm hoping to use this on projects the size of LLVM and PyTorch, for this I'm going to target a smaller project so I can iterate quickly.</p>
+<h1>Setting up static IP Addresses for the Machines</h1>
+<p>Initially, I tried to set static IP addresses through the router, but the MAC address randomization made this a pain. So instead I created a script to setup the IP addresses on each machine.</p>
+<pre class="codehilite"><code class="language-bash">#!/bin/bash
 
 # Auto-detect the Ethernet interface name
 # This looks for the first hardware device of type 'ethernet'
 IFACE=$(nmcli -t -f DEVICE,TYPE device | grep ':ethernet' | head -n 1 | cut -d: -f1)
 
-if [ -z "$IFACE" ]; then
-    echo "Error: No Ethernet hardware detected!"
+if [ -z &quot;$IFACE&quot; ]; then
+    echo &quot;Error: No Ethernet hardware detected!&quot;
     exit 1
 fi
 
 # Define variables
-IP_ADDR="192.168.1.210/24" # Change this to the desired IP address
-GATEWAY="192.168.1.1"
-DNS_SERVERS="1.1.1.1,8.8.8.8"
-PROFILE_NAME="Home-Static"
+IP_ADDR=&quot;192.168.1.210/24&quot; # Change this to the desired IP address
+GATEWAY=&quot;192.168.1.1&quot;
+DNS_SERVERS=&quot;1.1.1.1,8.8.8.8&quot;
+PROFILE_NAME=&quot;Home-Static&quot;
 
-echo "Detected Interface: $IFACE"
+echo &quot;Detected Interface: $IFACE&quot;
 
-echo "Step 1: Removing old connection profiles..."
-sudo nmcli con delete "Wired connection 1" || true
-sudo nmcli con delete "$PROFILE_NAME" || true
+echo &quot;Step 1: Removing old connection profiles...&quot;
+sudo nmcli con delete &quot;Wired connection 1&quot; || true
+sudo nmcli con delete &quot;$PROFILE_NAME&quot; || true
 
-echo "Step 2: Creating new profile '$PROFILE_NAME' for $IFACE..."
-sudo nmcli con add type ethernet con-name "$PROFILE_NAME" ifname "$IFACE" \
-    ip4 "$IP_ADDR" gw4 "$GATEWAY"
+echo &quot;Step 2: Creating new profile '$PROFILE_NAME' for $IFACE...&quot;
+sudo nmcli con add type ethernet con-name &quot;$PROFILE_NAME&quot; ifname &quot;$IFACE&quot; \
+    ip4 &quot;$IP_ADDR&quot; gw4 &quot;$GATEWAY&quot;
 
-echo "Step 3: Configuring DNS and Method..."
-sudo nmcli con mod "$PROFILE_NAME" ipv4.dns "$DNS_SERVERS"
-sudo nmcli con mod "$PROFILE_NAME" ipv4.method manual
+echo &quot;Step 3: Configuring DNS and Method...&quot;
+sudo nmcli con mod &quot;$PROFILE_NAME&quot; ipv4.dns &quot;$DNS_SERVERS&quot;
+sudo nmcli con mod &quot;$PROFILE_NAME&quot; ipv4.method manual
 
-echo "Step 4: Disabling MAC Randomization..."
-sudo nmcli con mod "$PROFILE_NAME" 802-3-ethernet.cloned-mac-address permanent
+echo &quot;Step 4: Disabling MAC Randomization...&quot;
+sudo nmcli con mod &quot;$PROFILE_NAME&quot; 802-3-ethernet.cloned-mac-address permanent
 
-echo "Step 5: Activating the connection..."
-sudo nmcli con up "$PROFILE_NAME"
+echo &quot;Step 5: Activating the connection...&quot;
+sudo nmcli con up &quot;$PROFILE_NAME&quot;
 
-echo "------------------------------------------------"
-echo "Verification:"
-ip addr show "$IFACE" | grep "inet "
-                        </code></pre>
+echo &quot;------------------------------------------------&quot;
+echo &quot;Verification:&quot;
+ip addr show &quot;$IFACE&quot; | grep &quot;inet &quot;
+</code></pre>
 
-                </section>
-
-                <section class="post-section">
-                    <h1>Setting up sccache</h1>
-
-                    Following the <a
-                        href="https://github.com/mozilla/sccache/blob/main/docs/DistributedQuickstart.md">instructions</a>
-                    on sccache's distributed setup. TLDR, I chose to setup a scheduler, client, and builder on my
-                    primary machine and then a builder on the secondary machine.
-
-                    <h2>Primary Machine</h2>
-
-                    <h3>Scheduler</h3>
-                    <pre><code class="toml"># scheduler.conf
+<h1>Setting up sccache</h1>
+<p>Following the <a href="https://github.com/mozilla/sccache/blob/main/docs/DistributedQuickstart.md">instructions</a> on sccache's distributed setup. TLDR, I chose to setup a scheduler, client, and builder on my primary machine and then a builder on the secondary machine.</p>
+<h2>Primary Machine</h2>
+<h3>Scheduler</h3>
+<pre class="codehilite"><code class="language-toml"># scheduler.conf
 # Listen on LAN IP and a fixed port
-public_addr = "192.168.1.210:10600" # Change this to the desired IP address
+public_addr = &quot;192.168.1.210:10600&quot; # Change this to the desired IP address
 
 [client_auth]
-type = "token"
-token = "YOUR_CLIENT_TOKEN_HERE"
+type = &quot;token&quot;
+token = &quot;YOUR_CLIENT_TOKEN_HERE&quot;
 
 [server_auth]
-type = "token"
-token = "YOUR_SERVER_TOKEN_HERE"
+type = &quot;token&quot;
+token = &quot;YOUR_SERVER_TOKEN_HERE&quot;
 </code></pre>
 
-                    <p>Start the scheduler</p>
-                    <pre><code class="bash">SCCACHE_NO_DAEMON=1 SCCACHE_LOG=trace sccache-dist scheduler --config scheduler.conf</code></pre>
+<p>Start the scheduler</p>
+<pre class="codehilite"><code class="language-bash">SCCACHE_NO_DAEMON=1 SCCACHE_LOG=trace sccache-dist scheduler --config scheduler.conf
+</code></pre>
 
-                    <h3>Build Server</h3>
-                    <pre><code class="toml"># server.conf
+<h3>Build Server</h3>
+<pre class="codehilite"><code class="language-toml"># server.conf
 # Listen address for the builder
-cache_dir = "/tmp/toolchains"
-public_addr = "192.168.1.210:10501"
-scheduler_url = "http://192.168.1.210:10600"
+cache_dir = &quot;/tmp/toolchains&quot;
+public_addr = &quot;192.168.1.210:10501&quot;
+scheduler_url = &quot;http://192.168.1.210:10600&quot;
 
 [builder]
-type = "overlay"
-build_dir = "/var/lib/sccache/build"
-bwrap_path = "/usr/bin/bwrap"
+type = &quot;overlay&quot;
+build_dir = &quot;/var/lib/sccache/build&quot;
+bwrap_path = &quot;/usr/bin/bwrap&quot;
 
 [scheduler_auth]
-type = "token"
-token = "YOUR_SERVER_TOKEN_HERE"
+type = &quot;token&quot;
+token = &quot;YOUR_SERVER_TOKEN_HERE&quot;
 </code></pre>
 
-                    <p>Start the build server</p>
-
-                    <pre><code class="bash">mkdir -p /var/lib/sccache/build
+<p>Start the build server</p>
+<pre class="codehilite"><code class="language-bash">mkdir -p /var/lib/sccache/build
 sudo apt install bubblewrap
-sudo SCCACHE_LOG=trace $(which sccache-dist) server --config server.conf</code></pre>
+sudo SCCACHE_LOG=trace $(which sccache-dist) server --config server.conf
+</code></pre>
 
-                    <h3>Client</h3>
-                    <pre><code class="toml"># client.conf
+<h3>Client</h3>
+<pre class="codehilite"><code class="language-toml"># client.conf
 [dist]
-scheduler_url = "http://192.168.1.210:10600"
+scheduler_url = &quot;http://192.168.1.210:10600&quot;
 toolchain_cache_size = 10737418240
 
 [dist.auth]
-type = "token"
-token = "YOUR_CLIENT_TOKEN_HERE"
+type = &quot;token&quot;
+token = &quot;YOUR_CLIENT_TOKEN_HERE&quot;
 </code></pre>
 
-                    <pre><code class="bash">export SCCACHE_CONF=/PATH/TO/client.conf
+<pre class="codehilite"><code class="language-bash">export SCCACHE_CONF=/PATH/TO/client.conf
 sccache --start-server
-sccache --dist-status</code></pre>
+sccache --dist-status
+</code></pre>
 
-                    <p>Example output for three connected servers:</p>
-                    <pre><code class="bash">{"SchedulerStatus":["http://192.168.1.210:10600/",{"num_servers":3,"num_cpus":28,"in_progress":0}]}</code></pre>
-
+<p>Example output for three connected servers:</p>
+<pre class="codehilite"><code class="language-bash">{&quot;SchedulerStatus&quot;:[&quot;http://192.168.1.210:10600/&quot;,{&quot;num_servers&quot;:3,&quot;num_cpus&quot;:28,&quot;in_progress&quot;:0}]}
+</code></pre>
                 </section>
             </article>
 
@@ -265,6 +239,7 @@ sccache --dist-status</code></pre>
             }
         });
     </script>
+    
 </body>
 
 </html>
