@@ -1,6 +1,6 @@
 window.blogPosts = [
   {
-    "title": "Setting up monitorying for the DIY cluster",
+    "title": "Setting up monitoring for the DIY cluster",
     "date": "2026-01-07",
     "url": "blog_posts/2026-01-07-monitoring.html",
     "excerpt": "Setting up monitorying for the DIY cluster.",
