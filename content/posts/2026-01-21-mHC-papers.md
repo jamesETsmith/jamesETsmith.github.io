@@ -26,16 +26,40 @@ This architecture means that deep networks will maintain signal from the input a
 [He et al](https://arxiv.org/pdf/1603.05027) showed that this "identity mapping" property maintains stability and efficiency during large scale training.
 Note that residual connections are a key design element used in LLMs although they tend to look more complicated in practice.
 
+Generalizing to a network with a shallow ($l$) and deep ($L$) portion:
+
+$$ \mathbf{x}_L = \mathbf{x}_l + \sum_{i=l}^{L-1} \mathcal{F}(\mathbf{x}_i, \mathcal{W}_i) $$
+
 ### Hyper-Connections
+
+!!! key-points
+    - FLOPs don't increase significantly because they only increases the expansion rate by "small" factors like 4.
+
 
 Increasing the capacity/complexity of the residual connections isn't a new area of research, but the introduction of hyper-connections is interesting for several reasons: 1) it greatly increases the topological complexity without significantly increasing the operational complexity of the residual units, 2) it yielded noticeably better benchmark results for smaller models, 3) but training instability limited the size of models to 27B parameters (for reference DeepSeek-V3 has 671B parameters).
 
 
 
+$$ \mathbf{x}_{l+1} = \mathcal{H}_l^{\text{res}} \mathbf{x}_l + \mathcal{H}_l^{\text{post} \top} \mathcal{F}(\mathcal{H}_l^{\text{pre}} \mathbf{x}_l, \mathcal{W}_l) $$
+
+- $ \mathcal{H}_l^{res} \in \mathbb{R}^{nxn}$ is a learnable mapping that mixes features within the residual stream
+- $ \mathcal{H}_l^{pre} \in \mathbb{R}^{1xn} $ is a learnable mapping that aggregates features from the nC-dim stream into a C-dim layer input
+- $ \mathcal{H}_l^{post} \in \mathbb{R}^{1xn} $ is a learnable mapping that maps the layer output back onto the stream.
+
+Looking at a recursive formula, it's easier to see where the instability from $\mathcal{H}_l^{res}$ can come from:
+
+$$ \mathbf{x}_L = \left( \prod_{i=1}^{L-l} \mathcal{H}_{L-i}^{\text{res}} \right) \mathbf{x}_l + \sum_{i=l}^{L-1} \left( \prod_{j=1}^{L-1-i} \mathcal{H}_{L-j}^{\text{res}} \right) \mathcal{H}_i^{\text{post} \top} \mathcal{F}(\mathcal{H}_i^{\text{pre}} \mathbf{x}_i, \mathcal{W}_i) $$
+
+As we apply the different $ \mathcal{H} $ matrices repeatedly, we can amplify or suppress signal from our input and for large network depths this can lead to gradient explosion or vanishing.
+
+> Why does't it add to the FLOPs by a noticeable amount for each computer unit?
 
 
 
-### Manifold-Constrained
+
+### Manifold-Constrained Hyper-Connections
+
+In Manifold-Constrained Hyper-Connections (mHC), the authors project $\mathcal{H}$ 
 
 
 <img src="/images/mHC_training_instability.png" alt="mHC training instability illustration" style="max-width:100%; height:auto;" />
@@ -44,4 +68,4 @@ Increasing the capacity/complexity of the residual connections isn't a new area 
 !!! implementation Sinkhorn-Knopp Algorithm
     Here's an implementation of the sinkhorn-knopp algorithm
 
-Here's a new paragraph
+- Introduces only a 6.7% time overhead when exapansion rate is $n=4$.
