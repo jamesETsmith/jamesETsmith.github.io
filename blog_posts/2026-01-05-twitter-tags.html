@@ -19,6 +19,21 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <!-- Graphology and Sigma -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
@@ -271,7 +286,7 @@
                     </div>
                 </header>
 
-                <section class="post-section">
+                <section class="post-section ">
                     <p>Below is an interactive network graph visualizing Twitter tags and their relationships. Use the controls on the left to filter categories or change the layout. Hover over nodes to see connected tweets and hover over tweets on the left pannel to see an inset preview of the tweets.</p>
 <div id="sigma-wrapper">
     <div id="controls-container">

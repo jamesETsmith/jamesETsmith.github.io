@@ -23,6 +23,8 @@
   --applied-bg: #e3f2fd;
   --implementation-color: #ef6c00;
   --implementation-bg: #fff3e0;
+  --key-points-color: #6a1b9a;
+  --key-points-bg: #f3e5f5;
 }
 
 [data-theme="dark"] {
@@ -46,6 +48,8 @@
   --applied-bg: #102a44;
   --implementation-color: #ffa726;
   --implementation-bg: #3e2708;
+  --key-points-color: #ab47bc;
+  --key-points-bg: #2e0d42;
 }
 
 * {
@@ -437,6 +441,15 @@ footer {
   color: var(--implementation-color);
 }
 
+.admonition.key-points {
+  border-left-color: var(--key-points-color);
+  background-color: var(--key-points-bg);
+}
+
+.admonition.key-points .admonition-title {
+  color: var(--key-points-color);
+}
+
 /* Responsive adjustments */
 @media (min-width: 768px) {
   h1 {
@@ -485,22 +498,22 @@ footer {
 
 /* Margin Notes Desktop Layout */
 @media (min-width: 1200px) {
-  .post-section {
+  .post-section.has-margin-notes {
     position: relative;
   }
   
   /* Restrict main content width to allow space for margin notes */
-  .post-section > * {
+  .post-section.has-margin-notes > * {
     max-width: 65%;
   }
   
   /* Allow full width for certain elements if needed, like wide code blocks or images */
-  .post-section > .full-width {
+  .post-section.has-margin-notes > .full-width {
     max-width: 100%;
   }
 
   /* Position admonitions in the right margin */
-  .post-section .admonition {
+  .post-section.has-margin-notes .admonition {
     float: right;
     clear: right;
     width: 30%;
@@ -654,6 +667,7 @@ footer {
 
 .post-section {
   margin-bottom: 3rem;
+  display: flow-root;
 }
 
 .post-section h3 {

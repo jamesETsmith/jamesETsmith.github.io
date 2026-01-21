@@ -1,5 +1,16 @@
 window.blogPosts = [
   {
+    "title": "Paper Speedrun Manifold-Constrained Hyper-Connections",
+    "date": "2026-01-21",
+    "url": "blog_posts/2026-01-21-mHC-papers.html",
+    "excerpt": "Quick summary of the mHC paper to help me learn about it.",
+    "tags": [
+      "deepseek",
+      "model architecture",
+      "resnet"
+    ]
+  },
+  {
     "title": "Setting up monitoring for the DIY cluster",
     "date": "2026-01-07",
     "url": "blog_posts/2026-01-07-monitoring.html",

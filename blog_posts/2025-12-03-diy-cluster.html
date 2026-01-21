@@ -19,6 +19,21 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
 </head>
 
@@ -61,7 +76,7 @@
                     </div>
                 </header>
 
-                <section class="post-section">
+                <section class="post-section ">
                     <p>While I'm out on parental leave, I don't have access to my work cluster. Since I still want to build larger software projects in a reasonable amount of time, I decided to try and hook up several old computers I had lying around.</p>
 <h1>The Plan</h1>
 <p><em>The goal of this little project is just to speed up how fast I can build larger software projects (e.g. LLVM).</em></p>
@@ -79,7 +94,7 @@
 # This looks for the first hardware device of type 'ethernet'
 IFACE=$(nmcli -t -f DEVICE,TYPE device | grep ':ethernet' | head -n 1 | cut -d: -f1)
 
-if [ -z &quot;$IFACE&quot; ]; then
+if [ -z "$IFACE&quot; ]; then
     echo &quot;Error: No Ethernet hardware detected!&quot;
     exit 1
 fi
@@ -90,29 +105,29 @@ GATEWAY=&quot;192.168.1.1&quot;
 DNS_SERVERS=&quot;1.1.1.1,8.8.8.8&quot;
 PROFILE_NAME=&quot;Home-Static&quot;
 
-echo &quot;Detected Interface: $IFACE&quot;
+echo &quot;Detected Interface: $IFACE"
 
-echo &quot;Step 1: Removing old connection profiles...&quot;
-sudo nmcli con delete &quot;Wired connection 1&quot; || true
-sudo nmcli con delete &quot;$PROFILE_NAME&quot; || true
+echo "Step 1: Removing old connection profiles..."
+sudo nmcli con delete "Wired connection 1" || true
+sudo nmcli con delete "$PROFILE_NAME&quot; || true
 
 echo &quot;Step 2: Creating new profile '$PROFILE_NAME' for $IFACE...&quot;
-sudo nmcli con add type ethernet con-name &quot;$PROFILE_NAME&quot; ifname &quot;$IFACE&quot; \
-    ip4 &quot;$IP_ADDR&quot; gw4 &quot;$GATEWAY&quot;
+sudo nmcli con add type ethernet con-name &quot;$PROFILE_NAME" ifname "$IFACE&quot; \
+    ip4 &quot;$IP_ADDR" gw4 "$GATEWAY&quot;
 
 echo &quot;Step 3: Configuring DNS and Method...&quot;
-sudo nmcli con mod &quot;$PROFILE_NAME&quot; ipv4.dns &quot;$DNS_SERVERS&quot;
-sudo nmcli con mod &quot;$PROFILE_NAME&quot; ipv4.method manual
+sudo nmcli con mod &quot;$PROFILE_NAME" ipv4.dns "$DNS_SERVERS&quot;
+sudo nmcli con mod &quot;$PROFILE_NAME" ipv4.method manual
 
-echo &quot;Step 4: Disabling MAC Randomization...&quot;
-sudo nmcli con mod &quot;$PROFILE_NAME&quot; 802-3-ethernet.cloned-mac-address permanent
+echo "Step 4: Disabling MAC Randomization..."
+sudo nmcli con mod "$PROFILE_NAME&quot; 802-3-ethernet.cloned-mac-address permanent
 
 echo &quot;Step 5: Activating the connection...&quot;
-sudo nmcli con up &quot;$PROFILE_NAME&quot;
+sudo nmcli con up &quot;$PROFILE_NAME"
 
-echo &quot;------------------------------------------------&quot;
-echo &quot;Verification:&quot;
-ip addr show &quot;$IFACE&quot; | grep &quot;inet &quot;
+echo "------------------------------------------------"
+echo "Verification:"
+ip addr show "$IFACE&quot; | grep &quot;inet &quot;
 </code></pre>
 
 <h1>Setting up sccache</h1>

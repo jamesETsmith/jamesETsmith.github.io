@@ -48,13 +48,38 @@ def main():
 
         # Extract metadata
         metadata = post.metadata
+        
+        # Pre-process content to protect math blocks from markdown parsing
+        # We replace $$...$$ with a placeholder
+        math_blocks = {}
+        
+        def replace_math_block(match):
+            block_id = f"MATHBLOCK_{len(math_blocks)}"
+            math_blocks[block_id] = match.group(0)
+            return block_id
+
+        # Protect block math $$...$$
+        # Using [\\s\\S] to match newlines as well
+        content = re.sub(r'\$\$[\s\S]*?\$\$', replace_math_block, post.content)
+        
+        # Protect inline math $...$
+        # Negative lookbehind/lookahead to avoid matching $$
+        content = re.sub(r'(?<!\$)\$(?!\$)[\s\S]*?(?<!\$)\$(?!\$)', replace_math_block, content)
+
         content = markdown.markdown(
-            post.content, extensions=["fenced_code", "codehilite", "tables", "admonition"]
+            content, extensions=["fenced_code", "codehilite", "tables", "admonition"]
         )
+
+        # Restore math blocks
+        for block_id, math_code in math_blocks.items():
+            content = content.replace(block_id, math_code)
 
         # Transform local markdown links to html links
         # This handles [Text](post.md) -> <a href="post.html">Text</a>
         content = re.sub(r'href="([^"]+)\.md"', r'href="\1.html"', content)
+
+        # Check for admonitions to conditionally styling
+        has_margin_notes = 'class="admonition' in content
 
         # Prepare context for template
         date_obj = metadata.get("date")
@@ -70,6 +95,7 @@ def main():
             "content": content,
             "extra_head": metadata.get("extra_head", ""),
             "extra_scripts": metadata.get("extra_scripts", ""),
+            "has_margin_notes": has_margin_notes,
         }
 
         # Render HTML
