@@ -49,7 +49,7 @@ def main():
         # Extract metadata
         metadata = post.metadata
         content = markdown.markdown(
-            post.content, extensions=["fenced_code", "codehilite", "tables"]
+            post.content, extensions=["fenced_code", "codehilite", "tables", "admonition"]
         )
 
         # Transform local markdown links to html links
