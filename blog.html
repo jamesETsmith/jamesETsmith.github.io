@@ -125,7 +125,10 @@
                         postElement.innerHTML = `
                             <div class="post-date">${formattedDate}</div>
                             <div class="post-content">
-                                <h4><a href="${post.url}">${post.title}</a></h4>
+                                <h4>
+                                    <a href="${post.url}">${post.title}</a>
+                                    ${post.is_draft ? '<span style="color: #e6a23c; font-size: 0.8em; vertical-align: middle; margin-left: 10px;">WIP 🚧</span>' : ''}
+                                </h4>
                                 <p class="post-excerpt">${post.excerpt}</p>
                                 <div class="post-tags">
                                     ${post.tags.map(tag => `<span class="tag" data-tag="${tag}">${tag}</span>`).join('')}

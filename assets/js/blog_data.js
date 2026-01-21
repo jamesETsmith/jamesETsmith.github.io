@@ -8,7 +8,8 @@ window.blogPosts = [
       "deepseek",
       "model architecture",
       "resnet"
-    ]
+    ],
+    "is_draft": true
   },
   {
     "title": "Setting up monitoring for the DIY cluster",
@@ -19,7 +20,8 @@ window.blogPosts = [
       "netdata",
       "cluster",
       "monitoring"
-    ]
+    ],
+    "is_draft": false
   },
   {
     "title": "Visualizing Twitter Tags with Sigma.js",
@@ -30,7 +32,8 @@ window.blogPosts = [
       "sigma.js",
       "visualization",
       "graph"
-    ]
+    ],
+    "is_draft": false
   },
   {
     "title": "DIY Cluster and Distributed Building Machine",
@@ -40,7 +43,8 @@ window.blogPosts = [
     "tags": [
       "sccache",
       "HPC"
-    ]
+    ],
+    "is_draft": false
   },
   {
     "title": "Embedding Visualization in HTML",
@@ -51,6 +55,7 @@ window.blogPosts = [
       "HTML",
       "Visualization",
       "JavaScript"
-    ]
+    ],
+    "is_draft": false
   }
 ];

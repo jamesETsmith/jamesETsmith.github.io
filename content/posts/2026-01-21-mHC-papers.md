@@ -3,6 +3,7 @@ title: Paper Speedrun Manifold-Constrained Hyper-Connections
 date: 2026-01-21
 tags: [deepseek,model architecture, resnet]
 excerpt: Quick summary of the mHC paper to help me learn about it.
+draft: true
 ---
 
 ## Sources
@@ -51,9 +52,6 @@ Looking at a recursive formula, it's easier to see where the instability from $\
 $$ \mathbf{x}_L = \left( \prod_{i=1}^{L-l} \mathcal{H}_{L-i}^{\text{res}} \right) \mathbf{x}_l + \sum_{i=l}^{L-1} \left( \prod_{j=1}^{L-1-i} \mathcal{H}_{L-j}^{\text{res}} \right) \mathcal{H}_i^{\text{post} \top} \mathcal{F}(\mathcal{H}_i^{\text{pre}} \mathbf{x}_i, \mathcal{W}_i) $$
 
 As we apply the different $ \mathcal{H} $ matrices repeatedly, we can amplify or suppress signal from our input and for large network depths this can lead to gradient explosion or vanishing.
-
-> Why does't it add to the FLOPs by a noticeable amount for each computer unit?
-
 
 
 

@@ -85,6 +85,7 @@ def main():
         date_obj = metadata.get("date")
         date_str = str(date_obj)  # Keep YYYY-MM-DD for datetime attribute
         date_display = format_date(date_obj)
+        is_draft = metadata.get("draft", False)
 
         context = {
             "title": metadata.get("title"),
@@ -96,6 +97,7 @@ def main():
             "extra_head": metadata.get("extra_head", ""),
             "extra_scripts": metadata.get("extra_scripts", ""),
             "has_margin_notes": has_margin_notes,
+            "is_draft": is_draft,
         }
 
         # Render HTML
@@ -116,6 +118,7 @@ def main():
                 "url": f"blog_posts/{html_filename}",
                 "excerpt": metadata.get("excerpt", ""),
                 "tags": metadata.get("tags", []),
+                "is_draft": is_draft,
             }
         )
 

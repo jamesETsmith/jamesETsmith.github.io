@@ -64,7 +64,7 @@
         <main>
             <article class="blog-post-content">
                 <header class="post-header">
-                    <h2>Paper Speedrun Manifold-Constrained Hyper-Connections</h2>
+                    <h2>Paper Speedrun Manifold-Constrained Hyper-Connections <span style="color: #e6a23c; font-size: 0.8em; vertical-align: middle; margin-left: 10px;">WIP 🚧</span></h2>
                     <div class="post-meta">
                         <time datetime="2026-01-21">January 21, 2026</time>
                         <div class="post-tags">
@@ -115,9 +115,6 @@ Note that residual connections are a key design element used in LLMs although th
 <p>Looking at a recursive formula, it's easier to see where the instability from $\mathcal{H}_l^{res}$ can come from:</p>
 <p>$$ \mathbf{x}_L = \left( \prod_{i=1}^{L-l} \mathcal{H}_{L-i}^{\text{res}} \right) \mathbf{x}_l + \sum_{i=l}^{L-1} \left( \prod_{j=1}^{L-1-i} \mathcal{H}_{L-j}^{\text{res}} \right) \mathcal{H}_i^{\text{post} \top} \mathcal{F}(\mathcal{H}_i^{\text{pre}} \mathbf{x}_i, \mathcal{W}_i) $$</p>
 <p>As we apply the different $$ \mathbf{x}_L = \mathbf{x}_l + \sum_{i=l}^{L-1} \mathcal{F}(\mathbf{x}_i, \mathcal{W}_i) $$0 matrices repeatedly, we can amplify or suppress signal from our input and for large network depths this can lead to gradient explosion or vanishing.</p>
-<blockquote>
-<p>Why does't it add to the FLOPs by a noticeable amount for each computer unit?</p>
-</blockquote>
 <h3>Manifold-Constrained Hyper-Connections</h3>
 <p>In Manifold-Constrained Hyper-Connections (mHC), the authors project $$ \mathbf{x}_L = \mathbf{x}_l + \sum_{i=l}^{L-1} \mathcal{F}(\mathbf{x}_i, \mathcal{W}_i) $$1 </p>
 <p><img src="/images/mHC_training_instability.png" alt="mHC training instability illustration" style="max-width:100%; height:auto;" /></p>
