@@ -7,7 +7,8 @@ window.blogPosts = [
     "tags": [
       "deepseek",
       "model architecture",
-      "resnet"
+      "resnet",
+      "manifold"
     ],
     "is_draft": true
   },

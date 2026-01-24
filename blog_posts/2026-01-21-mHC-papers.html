@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name="description" content="Quick summary of the mHC paper to help me learn about it." />
-    <meta name="keywords" content="deepseek model architecture resnet" />
+    <meta name="keywords" content="deepseek model architecture resnet manifold" />
     <link rel="stylesheet" href="../assets/css/minimal.css" />
     <link rel="icon" href="../images/k4_planar.svg">
     <!-- Google Fonts -->
@@ -75,6 +75,8 @@
                             
                             <span class="tag">resnet</span>
                             
+                            <span class="tag">manifold</span>
+                            
                         </div>
                     </div>
                 </header>
@@ -102,7 +104,7 @@ Note that residual connections are a key design element used in LLMs although th
 <div class="admonition key-points">
 <p class="admonition-title">Key-points</p>
 <ul>
-<li>FLOPs don't increase significantly because they only increases the expansion rate by "small" factors like 4.</li>
+<li>FLOPs don't increase significantly because the residual stream (left side of the diagram) require significantly fewer operations than the residual connections (right side of the diagram) and the width of the residual stream only increases by the "small" expansion rate of 4.</li>
 </ul>
 </div>
 <p>Increasing the capacity/complexity of the residual connections isn't a new area of research, but the introduction of hyper-connections is interesting for several reasons: 1) it greatly increases the topological complexity without significantly increasing the operational complexity of the residual units, 2) it yielded noticeably better benchmark results for smaller models, 3) but training instability limited the size of models to 27B parameters (for reference DeepSeek-V3 has 671B parameters).</p>
@@ -114,16 +116,17 @@ Note that residual connections are a key design element used in LLMs although th
 </ul>
 <p>Looking at a recursive formula, it's easier to see where the instability from $\mathcal{H}_l^{res}$ can come from:</p>
 <p>$$ \mathbf{x}_L = \left( \prod_{i=1}^{L-l} \mathcal{H}_{L-i}^{\text{res}} \right) \mathbf{x}_l + \sum_{i=l}^{L-1} \left( \prod_{j=1}^{L-1-i} \mathcal{H}_{L-j}^{\text{res}} \right) \mathcal{H}_i^{\text{post} \top} \mathcal{F}(\mathcal{H}_i^{\text{pre}} \mathbf{x}_i, \mathcal{W}_i) $$</p>
-<p>As we apply the different $$ \mathbf{x}_L = \mathbf{x}_l + \sum_{i=l}^{L-1} \mathcal{F}(\mathbf{x}_i, \mathcal{W}_i) $$0 matrices repeatedly, we can amplify or suppress signal from our input and for large network depths this can lead to gradient explosion or vanishing.</p>
+<p>As we apply the different $\mathcal{H}$ matrices repeatedly, we can amplify or suppress signal from our input and for large network depths this can lead to gradient explosion or vanishing.</p>
 <h3>Manifold-Constrained Hyper-Connections</h3>
-<p>In Manifold-Constrained Hyper-Connections (mHC), the authors project $$ \mathbf{x}_L = \mathbf{x}_l + \sum_{i=l}^{L-1} \mathcal{F}(\mathbf{x}_i, \mathcal{W}_i) $$1 </p>
+<p>In Manifold-Constrained Hyper-Connections (mHC), the authors restrict the residual connection matrix (TODO insert symbol) to be doubly stochastic matrices (i.e. the rows and columns each sum to 1).
+This constraint restores the identity mapping that Hyper-Connections broke and improves the stability of training for large and deep models.</p>
 <p><img src="/images/mHC_training_instability.png" alt="mHC training instability illustration" style="max-width:100%; height:auto;" /></p>
 <div class="admonition implementation sinkhorn-knopp algorithm">
 <p class="admonition-title">Implementation</p>
 <p>Here's an implementation of the sinkhorn-knopp algorithm</p>
 </div>
 <ul>
-<li>Introduces only a 6.7% time overhead when exapansion rate is $$ \mathbf{x}_L = \mathbf{x}_l + \sum_{i=l}^{L-1} \mathcal{F}(\mathbf{x}_i, \mathcal{W}_i) $$2.</li>
+<li>Introduces only a 6.7% time overhead when exapansion rate is $n=4$.</li>
 </ul>
                 </section>
             </article>

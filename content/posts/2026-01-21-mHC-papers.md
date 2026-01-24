@@ -1,7 +1,7 @@
 ---
 title: Paper Speedrun Manifold-Constrained Hyper-Connections
 date: 2026-01-21
-tags: [deepseek,model architecture, resnet]
+tags: [deepseek,model architecture, resnet, manifold]
 excerpt: Quick summary of the mHC paper to help me learn about it.
 draft: true
 ---
@@ -34,7 +34,7 @@ $$ \mathbf{x}_L = \mathbf{x}_l + \sum_{i=l}^{L-1} \mathcal{F}(\mathbf{x}_i, \mat
 ### Hyper-Connections
 
 !!! key-points
-    - FLOPs don't increase significantly because they only increases the expansion rate by "small" factors like 4.
+    - FLOPs don't increase significantly because the residual stream (left side of the diagram) require significantly fewer operations than the residual connections (right side of the diagram) and the width of the residual stream only increases by the "small" expansion rate of 4.
 
 
 Increasing the capacity/complexity of the residual connections isn't a new area of research, but the introduction of hyper-connections is interesting for several reasons: 1) it greatly increases the topological complexity without significantly increasing the operational complexity of the residual units, 2) it yielded noticeably better benchmark results for smaller models, 3) but training instability limited the size of models to 27B parameters (for reference DeepSeek-V3 has 671B parameters).
@@ -51,13 +51,14 @@ Looking at a recursive formula, it's easier to see where the instability from $\
 
 $$ \mathbf{x}_L = \left( \prod_{i=1}^{L-l} \mathcal{H}_{L-i}^{\text{res}} \right) \mathbf{x}_l + \sum_{i=l}^{L-1} \left( \prod_{j=1}^{L-1-i} \mathcal{H}_{L-j}^{\text{res}} \right) \mathcal{H}_i^{\text{post} \top} \mathcal{F}(\mathcal{H}_i^{\text{pre}} \mathbf{x}_i, \mathcal{W}_i) $$
 
-As we apply the different $ \mathcal{H} $ matrices repeatedly, we can amplify or suppress signal from our input and for large network depths this can lead to gradient explosion or vanishing.
+As we apply the different $\mathcal{H}$ matrices repeatedly, we can amplify or suppress signal from our input and for large network depths this can lead to gradient explosion or vanishing.
 
 
 
 ### Manifold-Constrained Hyper-Connections
 
-In Manifold-Constrained Hyper-Connections (mHC), the authors project $\mathcal{H}$ 
+In Manifold-Constrained Hyper-Connections (mHC), the authors restrict the residual connection matrix (TODO insert symbol) to be doubly stochastic matrices (i.e. the rows and columns each sum to 1).
+This constraint restores the identity mapping that Hyper-Connections broke and improves the stability of training for large and deep models.
 
 
 <img src="/images/mHC_training_instability.png" alt="mHC training instability illustration" style="max-width:100%; height:auto;" />
