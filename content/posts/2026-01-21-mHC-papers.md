@@ -7,17 +7,17 @@ draft: true
 ---
 
 ## Sources
-- Original paper from DeepSeek team: [https://www.arxiv.org/pdf/2512.24880](https://www.arxiv.org/pdf/2512.24880)
-- Hyper-connections paper from the ByteDance team: [https://arxiv.org/pdf/2409.19606](https://arxiv.org/pdf/2409.19606)
-- ResNet paper: [https://arxiv.org/pdf/1512.03385](https://arxiv.org/pdf/1512.03385)
-- Sinkhorn-Knopp Algorithm: [https://msp.org/pjm/1967/21-2/pjm-v21-n2-p14-s.pdf](https://msp.org/pjm/1967/21-2/pjm-v21-n2-p14-s.pdf)
-- Great overiew on youtube from Jin-Bin Huang: [https://www.youtube.com/watch?v=jYn_1PpRzxI](https://www.youtube.com/watch?v=jYn_1PpRzxI)
+1. Manifold-Constrained Hyper-Connections paper from DeepSeek team: [https://www.arxiv.org/pdf/2512.24880](https://www.arxiv.org/pdf/2512.24880)
+2. Hyper-connections paper from the ByteDance team: [https://arxiv.org/pdf/2409.19606](https://arxiv.org/pdf/2409.19606)
+3. ResNet paper: [https://arxiv.org/pdf/1512.03385](https://arxiv.org/pdf/1512.03385)
+4. Sinkhorn-Knopp Algorithm: [https://msp.org/pjm/1967/21-2/pjm-v21-n2-p14-s.pdf](https://msp.org/pjm/1967/21-2/pjm-v21-n2-p14-s.pdf)
+5. Great overiew on youtube from Jin-Bin Huang: [https://www.youtube.com/watch?v=jYn_1PpRzxI](https://www.youtube.com/watch?v=jYn_1PpRzxI)
 
 ## Speed Run🏃‍♂️
 
 The authors have summarized their adaptation of the Hyper-Connections architecture very nicely in the TOC figure, shown below. This post will be follow the story outlined in that figure and walk through each of the subfigures.
 
-<img src="/images/mHC_overview.png" alt="mHC paper overview" style="max-width:100%; height:auto;" />
+<img src="/images/mHC_overview.png" alt="mHC paper overview" style="max-width:100%; height:auto;" /> [1](#sources).
 
 ### Residual Connection
 
@@ -37,7 +37,7 @@ $$ \mathbf{x}_L = \mathbf{x}_l + \sum_{i=l}^{L-1} \mathcal{F}(\mathbf{x}_i, \mat
     - FLOPs don't increase significantly because the residual stream (left side of the diagram) require significantly fewer operations than the residual connections (right side of the diagram) and the width of the residual stream only increases by the "small" expansion rate of 4.
 
 
-Increasing the capacity/complexity of the residual connections isn't a new area of research, but the introduction of hyper-connections is interesting for several reasons: 1) it greatly increases the topological complexity without significantly increasing the operational complexity of the residual units, 2) it yielded noticeably better benchmark results for smaller models, 3) but training instability limited the size of models to 27B parameters (for reference DeepSeek-V3 has 671B parameters).
+Increasing the capacity/complexity of the residual connections isn't a new area of research, but the introduction of Hyper-Connections (HC) is interesting for several reasons: 1) it greatly increases the topological complexity without significantly increasing the operational complexity of the residual units, 2) it yielded noticeably better benchmark results for smaller models, 3) but training instability limited the size of models to 27B parameters (for reference DeepSeek-V3 has 671B parameters).
 
 
 
@@ -57,14 +57,22 @@ As we apply the different $\mathcal{H}$ matrices repeatedly, we can amplify or s
 
 ### Manifold-Constrained Hyper-Connections
 
-In Manifold-Constrained Hyper-Connections (mHC), the authors restrict the residual connection matrix (TODO insert symbol) to be doubly stochastic matrices (i.e. the rows and columns each sum to 1).
-This constraint restores the identity mapping that Hyper-Connections broke and improves the stability of training for large and deep models.
+In Manifold-Constrained Hyper-Connections (mHC), the authors restrict the residual connection matrix $\mathcal{H}_l^{res}$ to be doubly stochastic matrices (i.e. the rows and columns each sum to 1).
+This constraint restores the identity mapping that HC broke and improves the stability of training for large and deep models.
 
 
 <img src="/images/mHC_training_instability.png" alt="mHC training instability illustration" style="max-width:100%; height:auto;" />
 
+In addition to better training stability compared to vanilla HC, mHC outperforms HC and the baseline on most of the benchmarks studied in the paper, although the improvement is relatively modest.
+With that said, I haven't looked into the benchmarks more to get a better sense of the spread of performance from other models.
+For example, if the distribution of other results is narrow, these results would appear more impressive.
+
+<img src="/images/mHC_benchmarks.png" alt="mHC benchmarks" style="max-width:100%; height:auto;" />
 
 !!! implementation Sinkhorn-Knopp Algorithm
     Here's an implementation of the sinkhorn-knopp algorithm
 
 - Introduces only a 6.7% time overhead when exapansion rate is $n=4$.
+
+## Sources
+1. https://www.arxiv.org/pdf/2512.24880

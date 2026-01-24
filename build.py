@@ -70,7 +70,7 @@ def main():
         content = re.sub(r'(?<!\$)\$(?!\$)[\s\S]*?(?<!\$)\$(?!\$)', replace_math_block, content)
 
         content = markdown.markdown(
-            content, extensions=["fenced_code", "codehilite", "tables", "admonition"]
+            content, extensions=["fenced_code", "codehilite", "tables", "admonition", "footnotes"]
         )
 
         # Restore math blocks
