@@ -437,7 +437,9 @@ footer {
   background-color: var(--implementation-bg);
 }
 
-.admonition.implementation .admonition-title {
+/* Fix for multi-class implementation admonitions */
+.admonition.implementation .admonition-title,
+[class*="admonition"][class*="implementation"] .admonition-title {
   color: var(--implementation-color);
 }
 
@@ -934,50 +936,4 @@ code {
   background-color: #6aafff;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Footnotes */
-.footnote {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border-color);
-  font-size: 0.9rem;
-}
-
-.footnote hr {
-  display: none; /* Hide the default HR since we added a border-top */
-}
-
-.footnote ol {
-  padding-left: 1.5rem;
-}
-
-.footnote li {
-  margin-bottom: 0.5rem;
-}
-
-.footnote-backref {
-  text-decoration: none;
-  margin-left: 0.25rem;
-  color: var(--link-color);
-  font-family: var(--font-family); /* Ensure arrow symbol renders consistently */
-}
-
-/* Optional: Make inline footnotes look more like [1] */
-sup[id^="fnref"] {
-  top: -0.2em; /* Adjust vertical alignment slightly */
-}
-
-sup[id^="fnref"] a {
-  text-decoration: none;
-}
-
-sup[id^="fnref"] a::before {
-  content: '[';
-  color: var(--text-color);
-}
-
-sup[id^="fnref"] a::after {
-  content: ']';
-  color: var(--text-color);
 }

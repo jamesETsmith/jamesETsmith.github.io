@@ -17,7 +17,7 @@ draft: true
 
 The authors have summarized their adaptation of the Hyper-Connections architecture very nicely in the TOC figure, shown below. This post will be follow the story outlined in that figure and walk through each of the subfigures.
 
-<img src="/images/mHC_overview.png" alt="mHC paper overview" style="max-width:100%; height:auto;" /> [1](#sources).
+<img src="/images/mHC_overview.png" alt="mHC paper overview" style="max-width:100%; height:auto;" /> .
 
 ### Residual Connection
 
@@ -51,14 +51,23 @@ Looking at a recursive formula, it's easier to see where the instability from $\
 
 $$ \mathbf{x}_L = \left( \prod_{i=1}^{L-l} \mathcal{H}_{L-i}^{\text{res}} \right) \mathbf{x}_l + \sum_{i=l}^{L-1} \left( \prod_{j=1}^{L-1-i} \mathcal{H}_{L-j}^{\text{res}} \right) \mathcal{H}_i^{\text{post} \top} \mathcal{F}(\mathcal{H}_i^{\text{pre}} \mathbf{x}_i, \mathcal{W}_i) $$
 
-As we apply the different $\mathcal{H}$ matrices repeatedly, we can amplify or suppress signal from our input and for large network depths this can lead to gradient explosion or vanishing.
+As we apply $\mathcal{H}^{\text{res}}$ matrices repeatedly, we can amplify or suppress signal from our input and for large network depths this can lead to gradient explosion or vanishing.
 
 
 
 ### Manifold-Constrained Hyper-Connections
 
-In Manifold-Constrained Hyper-Connections (mHC), the authors restrict the residual connection matrix $\mathcal{H}_l^{res}$ to be doubly stochastic matrices (i.e. the rows and columns each sum to 1).
+In Manifold-Constrained Hyper-Connections (mHC), the authors restrict the residual connection matrix $\mathcal{H}_l^{res}$ to be doubly stochastic matrices (i.e. the rows and columns each sum to 1) using the Sinkhorn-Knopp algorithm.
 This constraint restores the identity mapping that HC broke and improves the stability of training for large and deep models.
+More formally, the double stochasticity has three important consequences:
+
+1. The spectral norm (maximum singular value) of doubly stocastic matrices is bounded by 1, i.e. $\sigma_{max}(\mathcal{H}_l^{res}) \le 1$. This means that the signal gain will not accumulate over many deep layers and this should help mitigate the exploding gradient problem that plagues HC.
+2. The set of doubly stochastic matrices is closed under matrix multiplication, meaning that multiplying two doubly stochastic matrices will always yield another doubly stochastic matrix. This means that we'll maintain these desired properties regardless of the network depth.
+3. 
+
+!!! implementation "Sinkhorn-Knopp Algorithm"
+    1. Make all elements positive via an exponential operator
+    2. for 20 iterations: normalize all the rows, then normalize all the columns
 
 
 <img src="/images/mHC_training_instability.png" alt="mHC training instability illustration" style="max-width:100%; height:auto;" />
@@ -69,10 +78,6 @@ For example, if the distribution of other results is narrow, these results would
 
 <img src="/images/mHC_benchmarks.png" alt="mHC benchmarks" style="max-width:100%; height:auto;" />
 
-!!! implementation Sinkhorn-Knopp Algorithm
-    Here's an implementation of the sinkhorn-knopp algorithm
 
+#### 
 - Introduces only a 6.7% time overhead when exapansion rate is $n=4$.
-
-## Sources
-1. https://www.arxiv.org/pdf/2512.24880
