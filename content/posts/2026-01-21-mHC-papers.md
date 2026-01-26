@@ -63,7 +63,7 @@ More formally, the double stochasticity has three important consequences:
 
 1. The spectral norm (maximum singular value) of doubly stocastic matrices is bounded by 1, i.e. $\sigma_{max}(\mathcal{H}_l^{res}) \le 1$. This means that the signal gain will not accumulate over many deep layers and this should help mitigate the exploding gradient problem that plagues HC.
 2. The set of doubly stochastic matrices is closed under matrix multiplication, meaning that multiplying two doubly stochastic matrices will always yield another doubly stochastic matrix. This means that we'll maintain these desired properties regardless of the network depth.
-3. 
+3. Since the doubly stochastic matrices contain only positive elements, we can view this residual mapping as a diffusion of information across all streams.
 
 !!! implementation "Sinkhorn-Knopp Algorithm"
     1. Make all elements positive via an exponential operator
@@ -79,5 +79,7 @@ For example, if the distribution of other results is narrow, these results would
 <img src="/images/mHC_benchmarks.png" alt="mHC benchmarks" style="max-width:100%; height:auto;" />
 
 
-#### 
-- Introduces only a 6.7% time overhead when exapansion rate is $n=4$.
+#### Performance improvements
+TLDR: Introduces only a 6.7% time overhead when exapansion rate is $n=4$.
+
+See [this blog post](https://www.k-a.in/mHC.html) for a detailed breakdown of the performance improvements.

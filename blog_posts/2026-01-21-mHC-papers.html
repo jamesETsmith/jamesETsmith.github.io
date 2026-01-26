@@ -124,7 +124,7 @@ More formally, the double stochasticity has three important consequences:</p>
 <ol>
 <li>The spectral norm (maximum singular value) of doubly stocastic matrices is bounded by 1, i.e. $\sigma_{max}(\mathcal{H}_l^{res}) \le 1$. This means that the signal gain will not accumulate over many deep layers and this should help mitigate the exploding gradient problem that plagues HC.</li>
 <li>The set of doubly stochastic matrices is closed under matrix multiplication, meaning that multiplying two doubly stochastic matrices will always yield another doubly stochastic matrix. This means that we'll maintain these desired properties regardless of the network depth.</li>
-<li></li>
+<li>Since the doubly stochastic matrices contain only positive elements, we can view this residual mapping as a diffusion of information across all streams.</li>
 </ol>
 <div class="admonition implementation">
 <p class="admonition-title">Sinkhorn-Knopp Algorithm</p>
@@ -138,10 +138,9 @@ More formally, the double stochasticity has three important consequences:</p>
 With that said, I haven't looked into the benchmarks more to get a better sense of the spread of performance from other models.
 For example, if the distribution of other results is narrow, these results would appear more impressive.</p>
 <p><img src="/images/mHC_benchmarks.png" alt="mHC benchmarks" style="max-width:100%; height:auto;" /></p>
-<h4></h4>
-<ul>
-<li>Introduces only a 6.7% time overhead when exapansion rate is $n=4$.</li>
-</ul>
+<h4>Performance improvements</h4>
+<p>TLDR: Introduces only a 6.7% time overhead when exapansion rate is $n=4$.</p>
+<p>See <a href="https://www.k-a.in/mHC.html">this blog post</a> for a detailed breakdown of the performance improvements.</p>
                 </section>
             </article>
 
