@@ -1,15 +1,16 @@
 window.blogPosts = [
   {
-    "title": "Paper Speedrun Manifold-Constrained Hyper-Connections",
+    "title": "Paper Speedrun \ud83c\udfc3\u200d\u2642\ufe0f Manifold-Constrained Hyper-Connections",
     "date": "2026-01-21",
     "url": "blog_posts/2026-01-21-mHC-papers.html",
     "excerpt": "Quick summary of the mHC paper to help me learn about it.",
     "tags": [
       "deepseek",
       "model architecture",
-      "resnet"
+      "resnet",
+      "manifold"
     ],
-    "is_draft": true
+    "is_draft": false
   },
   {
     "title": "Setting up monitoring for the DIY cluster",

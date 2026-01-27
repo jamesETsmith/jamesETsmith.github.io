@@ -54,7 +54,10 @@ def main():
         math_blocks = {}
         
         def replace_math_block(match):
-            block_id = f"MATHBLOCK_{len(math_blocks)}"
+            # Use a placeholder that is:
+            # 1. Safe from Markdown parsing (alphanumeric only, no underscores/asterisks)
+            # 2. Safe from substring collisions (unique prefix and suffix)
+            block_id = f"MATHBLOCK{len(math_blocks)}END"
             math_blocks[block_id] = match.group(0)
             return block_id
 
@@ -67,7 +70,7 @@ def main():
         content = re.sub(r'(?<!\$)\$(?!\$)[\s\S]*?(?<!\$)\$(?!\$)', replace_math_block, content)
 
         content = markdown.markdown(
-            content, extensions=["fenced_code", "codehilite", "tables", "admonition"]
+            content, extensions=["fenced_code", "codehilite", "tables", "admonition", "footnotes"]
         )
 
         # Restore math blocks

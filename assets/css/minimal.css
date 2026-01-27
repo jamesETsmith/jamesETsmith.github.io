@@ -437,7 +437,9 @@ footer {
   background-color: var(--implementation-bg);
 }
 
-.admonition.implementation .admonition-title {
+/* Fix for multi-class implementation admonitions */
+.admonition.implementation .admonition-title,
+[class*="admonition"][class*="implementation"] .admonition-title {
   color: var(--implementation-color);
 }
 
