@@ -12,6 +12,7 @@ draft: true
 3. ResNet paper: [https://arxiv.org/pdf/1512.03385](https://arxiv.org/pdf/1512.03385)
 4. Sinkhorn-Knopp Algorithm: [https://msp.org/pjm/1967/21-2/pjm-v21-n2-p14-s.pdf](https://msp.org/pjm/1967/21-2/pjm-v21-n2-p14-s.pdf)
 5. Great overview on youtube from Jin-Bin Huang: [https://www.youtube.com/watch?v=jYn_1PpRzxI](https://www.youtube.com/watch?v=jYn_1PpRzxI)
+6. Blog post from [https://x.com/arjunkocher](https://x.com/arjunkocher): [https://www.k-a.in/mHC.html](https://www.k-a.in/mHC.html)
 
 ## Speed Run🏃‍♂️
 
@@ -34,7 +35,7 @@ $$ \mathbf{x}_L = \mathbf{x}_l + \sum_{i=l}^{L-1} \mathcal{F}(\mathbf{x}_i, \mat
 ### Hyper-Connections
 
 !!! key-points
-    - FLOPs don't increase significantly because the residual stream (left side of the diagram) requires significantly fewer operations than the residual connections (right side of the diagram) and the width of the residual stream only increases by the "small" expansion rate of 4.
+    FLOPs don't increase significantly because the residual stream (left side of the diagram) requires significantly fewer operations than the residual connections (right side of the diagram) and the width of the residual stream only increases by the "small" expansion rate of 4.
 
 
 Increasing the capacity/complexity of the residual connections isn't a new area of research, but the introduction of Hyper-Connections (HC) is interesting for several reasons: 1) it greatly increases the topological complexity without significantly increasing the operational complexity of the residual units, 2) it yielded noticeably better benchmark results for smaller models, 3) but training instability limited the size of models to 27B parameters (for reference DeepSeek-V3 has 671B parameters).
@@ -80,6 +81,15 @@ For example, if the distribution of other results is narrow, these results would
 
 
 #### Performance improvements
-TLDR: Introduces only a 6.7% time overhead when expansion rate is $n=4$.
+TLDR: mHC only a 6.7% time overhead when expansion rate is $n=4$ compared to vanilla residual connections.
+
+The DeepSeek team made three improvements compared to HC to achieve this small overhead: 1) manual kernel fusion to compute $\mathcal{H}_l$ matrices, 2) reducing the memory overhead by discarding the intermediate activations of the mHC kernels after the forward pass and then recompute them on the backwards pass, and 3) using pipeline parallelism (like [instruction pipelining](https://en.algorithmica.org/hpc/pipelining/) on CPUs) to ensure that communication and compute is happening simultaneously.
 
 See [this blog post](https://www.k-a.in/mHC.html) for a detailed breakdown of the performance improvements.
+
+
+## Summary
+
+The DeepSeek team improved the usability of Hyper-Connections architectures by make their training (aka pretraining for some) more stable and efficient.
+The Hyper-Connections architecture already showed better benchmark performance than vanilla residual connections and Manifold-Constrained Hyper-Connections performs better than *both* on 7/8 benchmarks discussed in the paper.
+Thinking about constraints for components of our networks isn't new, but it seems to be gaining momentum in the community and offers an exciting avenue of research as scientists connect the underlying mathematical structure of the models to the models trainability and capability.
