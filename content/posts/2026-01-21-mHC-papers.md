@@ -11,13 +11,13 @@ draft: true
 2. Hyper-connections paper from the ByteDance team: [https://arxiv.org/pdf/2409.19606](https://arxiv.org/pdf/2409.19606)
 3. ResNet paper: [https://arxiv.org/pdf/1512.03385](https://arxiv.org/pdf/1512.03385)
 4. Sinkhorn-Knopp Algorithm: [https://msp.org/pjm/1967/21-2/pjm-v21-n2-p14-s.pdf](https://msp.org/pjm/1967/21-2/pjm-v21-n2-p14-s.pdf)
-5. Great overiew on youtube from Jin-Bin Huang: [https://www.youtube.com/watch?v=jYn_1PpRzxI](https://www.youtube.com/watch?v=jYn_1PpRzxI)
+5. Great overview on youtube from Jin-Bin Huang: [https://www.youtube.com/watch?v=jYn_1PpRzxI](https://www.youtube.com/watch?v=jYn_1PpRzxI)
 
 ## Speed Run🏃‍♂️
 
-The authors have summarized their adaptation of the Hyper-Connections architecture very nicely in the TOC figure, shown below. This post will be follow the story outlined in that figure and walk through each of the subfigures.
+The authors have summarized their adaptation of the Hyper-Connections architecture very nicely in the TOC figure, shown below. This post will follow the story outlined in that figure and walk through each of the subfigures.
 
-<img src="/images/mHC_overview.png" alt="mHC paper overview" style="max-width:100%; height:auto;" /> .
+<img src="/images/mHC_overview.png" alt="mHC paper overview" style="max-width:100%; height:auto;" />
 
 ### Residual Connection
 
@@ -34,7 +34,7 @@ $$ \mathbf{x}_L = \mathbf{x}_l + \sum_{i=l}^{L-1} \mathcal{F}(\mathbf{x}_i, \mat
 ### Hyper-Connections
 
 !!! key-points
-    - FLOPs don't increase significantly because the residual stream (left side of the diagram) require significantly fewer operations than the residual connections (right side of the diagram) and the width of the residual stream only increases by the "small" expansion rate of 4.
+    - FLOPs don't increase significantly because the residual stream (left side of the diagram) requires significantly fewer operations than the residual connections (right side of the diagram) and the width of the residual stream only increases by the "small" expansion rate of 4.
 
 
 Increasing the capacity/complexity of the residual connections isn't a new area of research, but the introduction of Hyper-Connections (HC) is interesting for several reasons: 1) it greatly increases the topological complexity without significantly increasing the operational complexity of the residual units, 2) it yielded noticeably better benchmark results for smaller models, 3) but training instability limited the size of models to 27B parameters (for reference DeepSeek-V3 has 671B parameters).
@@ -57,11 +57,11 @@ As we apply $\mathcal{H}^{\text{res}}$ matrices repeatedly, we can amplify or su
 
 ### Manifold-Constrained Hyper-Connections
 
-In Manifold-Constrained Hyper-Connections (mHC), the authors restrict the residual connection matrix $\mathcal{H}_l^{res}$ to be doubly stochastic matrices (i.e. the rows and columns each sum to 1) using the Sinkhorn-Knopp algorithm.
+In Manifold-Constrained Hyper-Connections (mHC), the authors restrict the residual connection matrix $\mathcal{H}_l^{res}$ to be a doubly stochastic matrix (i.e. the rows and columns each sum to 1) using the Sinkhorn-Knopp algorithm.
 This constraint restores the identity mapping that HC broke and improves the stability of training for large and deep models.
 More formally, the double stochasticity has three important consequences:
 
-1. The spectral norm (maximum singular value) of doubly stocastic matrices is bounded by 1, i.e. $\sigma_{max}(\mathcal{H}_l^{res}) \le 1$. This means that the signal gain will not accumulate over many deep layers and this should help mitigate the exploding gradient problem that plagues HC.
+1. The spectral norm (maximum singular value) of doubly stochastic matrices is bounded by 1, i.e. $\sigma_{max}(\mathcal{H}_l^{res}) \le 1$. This means that the signal gain will not accumulate over many deep layers and this should help mitigate the exploding gradient problem that plagues HC.
 2. The set of doubly stochastic matrices is closed under matrix multiplication, meaning that multiplying two doubly stochastic matrices will always yield another doubly stochastic matrix. This means that we'll maintain these desired properties regardless of the network depth.
 3. Since the doubly stochastic matrices contain only positive elements, we can view this residual mapping as a diffusion of information across all streams.
 
@@ -80,6 +80,6 @@ For example, if the distribution of other results is narrow, these results would
 
 
 #### Performance improvements
-TLDR: Introduces only a 6.7% time overhead when exapansion rate is $n=4$.
+TLDR: Introduces only a 6.7% time overhead when expansion rate is $n=4$.
 
 See [this blog post](https://www.k-a.in/mHC.html) for a detailed breakdown of the performance improvements.

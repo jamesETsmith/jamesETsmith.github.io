@@ -88,11 +88,11 @@
 <li>Hyper-connections paper from the ByteDance team: <a href="https://arxiv.org/pdf/2409.19606">https://arxiv.org/pdf/2409.19606</a></li>
 <li>ResNet paper: <a href="https://arxiv.org/pdf/1512.03385">https://arxiv.org/pdf/1512.03385</a></li>
 <li>Sinkhorn-Knopp Algorithm: <a href="https://msp.org/pjm/1967/21-2/pjm-v21-n2-p14-s.pdf">https://msp.org/pjm/1967/21-2/pjm-v21-n2-p14-s.pdf</a></li>
-<li>Great overiew on youtube from Jin-Bin Huang: <a href="https://www.youtube.com/watch?v=jYn_1PpRzxI">https://www.youtube.com/watch?v=jYn_1PpRzxI</a></li>
+<li>Great overview on youtube from Jin-Bin Huang: <a href="https://www.youtube.com/watch?v=jYn_1PpRzxI">https://www.youtube.com/watch?v=jYn_1PpRzxI</a></li>
 </ol>
 <h2>Speed Run🏃‍♂️</h2>
-<p>The authors have summarized their adaptation of the Hyper-Connections architecture very nicely in the TOC figure, shown below. This post will be follow the story outlined in that figure and walk through each of the subfigures.</p>
-<p><img src="/images/mHC_overview.png" alt="mHC paper overview" style="max-width:100%; height:auto;" /> .</p>
+<p>The authors have summarized their adaptation of the Hyper-Connections architecture very nicely in the TOC figure, shown below. This post will follow the story outlined in that figure and walk through each of the subfigures.</p>
+<p><img src="/images/mHC_overview.png" alt="mHC paper overview" style="max-width:100%; height:auto;" /></p>
 <h3>Residual Connection</h3>
 <p>$$ x_{l+1} = x_l + \mathcal{F}(x_l, W_l) $$</p>
 <p>This architecture means that deep networks will maintain signal from the input at an arbitrary depth.
@@ -104,7 +104,7 @@ Note that residual connections are a key design element used in LLMs although th
 <div class="admonition key-points">
 <p class="admonition-title">Key-points</p>
 <ul>
-<li>FLOPs don't increase significantly because the residual stream (left side of the diagram) require significantly fewer operations than the residual connections (right side of the diagram) and the width of the residual stream only increases by the "small" expansion rate of 4.</li>
+<li>FLOPs don't increase significantly because the residual stream (left side of the diagram) requires significantly fewer operations than the residual connections (right side of the diagram) and the width of the residual stream only increases by the "small" expansion rate of 4.</li>
 </ul>
 </div>
 <p>Increasing the capacity/complexity of the residual connections isn't a new area of research, but the introduction of Hyper-Connections (HC) is interesting for several reasons: 1) it greatly increases the topological complexity without significantly increasing the operational complexity of the residual units, 2) it yielded noticeably better benchmark results for smaller models, 3) but training instability limited the size of models to 27B parameters (for reference DeepSeek-V3 has 671B parameters).</p>
@@ -118,11 +118,11 @@ Note that residual connections are a key design element used in LLMs although th
 <p>$$ \mathbf{x}_L = \left( \prod_{i=1}^{L-l} \mathcal{H}_{L-i}^{\text{res}} \right) \mathbf{x}_l + \sum_{i=l}^{L-1} \left( \prod_{j=1}^{L-1-i} \mathcal{H}_{L-j}^{\text{res}} \right) \mathcal{H}_i^{\text{post} \top} \mathcal{F}(\mathcal{H}_i^{\text{pre}} \mathbf{x}_i, \mathcal{W}_i) $$</p>
 <p>As we apply $\mathcal{H}^{\text{res}}$ matrices repeatedly, we can amplify or suppress signal from our input and for large network depths this can lead to gradient explosion or vanishing.</p>
 <h3>Manifold-Constrained Hyper-Connections</h3>
-<p>In Manifold-Constrained Hyper-Connections (mHC), the authors restrict the residual connection matrix $\mathcal{H}_l^{res}$ to be doubly stochastic matrices (i.e. the rows and columns each sum to 1) using the Sinkhorn-Knopp algorithm.
+<p>In Manifold-Constrained Hyper-Connections (mHC), the authors restrict the residual connection matrix $\mathcal{H}_l^{res}$ to be a doubly stochastic matrix (i.e. the rows and columns each sum to 1) using the Sinkhorn-Knopp algorithm.
 This constraint restores the identity mapping that HC broke and improves the stability of training for large and deep models.
 More formally, the double stochasticity has three important consequences:</p>
 <ol>
-<li>The spectral norm (maximum singular value) of doubly stocastic matrices is bounded by 1, i.e. $\sigma_{max}(\mathcal{H}_l^{res}) \le 1$. This means that the signal gain will not accumulate over many deep layers and this should help mitigate the exploding gradient problem that plagues HC.</li>
+<li>The spectral norm (maximum singular value) of doubly stochastic matrices is bounded by 1, i.e. $\sigma_{max}(\mathcal{H}_l^{res}) \le 1$. This means that the signal gain will not accumulate over many deep layers and this should help mitigate the exploding gradient problem that plagues HC.</li>
 <li>The set of doubly stochastic matrices is closed under matrix multiplication, meaning that multiplying two doubly stochastic matrices will always yield another doubly stochastic matrix. This means that we'll maintain these desired properties regardless of the network depth.</li>
 <li>Since the doubly stochastic matrices contain only positive elements, we can view this residual mapping as a diffusion of information across all streams.</li>
 </ol>
@@ -139,7 +139,7 @@ With that said, I haven't looked into the benchmarks more to get a better sense 
 For example, if the distribution of other results is narrow, these results would appear more impressive.</p>
 <p><img src="/images/mHC_benchmarks.png" alt="mHC benchmarks" style="max-width:100%; height:auto;" /></p>
 <h4>Performance improvements</h4>
-<p>TLDR: Introduces only a 6.7% time overhead when exapansion rate is $n=4$.</p>
+<p>TLDR: Introduces only a 6.7% time overhead when expansion rate is $n=4$.</p>
 <p>See <a href="https://www.k-a.in/mHC.html">this blog post</a> for a detailed breakdown of the performance improvements.</p>
                 </section>
             </article>
