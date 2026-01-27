@@ -1,9 +1,8 @@
 ---
-title: Paper Speedrun Manifold-Constrained Hyper-Connections
+title: Paper Speedrun 🏃‍♂️ Manifold-Constrained Hyper-Connections
 date: 2026-01-21
 tags: [deepseek,model architecture, resnet, manifold]
 excerpt: Quick summary of the mHC paper to help me learn about it.
-draft: true
 ---
 
 ## Sources
@@ -14,7 +13,7 @@ draft: true
 5. Great overview on youtube from Jin-Bin Huang: [https://www.youtube.com/watch?v=jYn_1PpRzxI](https://www.youtube.com/watch?v=jYn_1PpRzxI)
 6. Blog post from [https://x.com/arjunkocher](https://x.com/arjunkocher): [https://www.k-a.in/mHC.html](https://www.k-a.in/mHC.html)
 
-## Speed Run🏃‍♂️
+## Speedrun🏃‍♂️
 
 The authors have summarized their adaptation of the Hyper-Connections architecture very nicely in the TOC figure, shown below. This post will follow the story outlined in that figure and walk through each of the subfigures.
 
@@ -81,15 +80,15 @@ For example, if the distribution of other results is narrow, these results would
 
 
 #### Performance improvements
-TLDR: mHC only a 6.7% time overhead when expansion rate is $n=4$ compared to vanilla residual connections.
+TLDR: mHC introduces only a 6.7% time overhead when expansion rate is $n=4$ compared to vanilla residual connections.
 
-The DeepSeek team made three improvements compared to HC to achieve this small overhead: 1) manual kernel fusion to compute $\mathcal{H}_l$ matrices, 2) reducing the memory overhead by discarding the intermediate activations of the mHC kernels after the forward pass and then recompute them on the backwards pass, and 3) using pipeline parallelism (like [instruction pipelining](https://en.algorithmica.org/hpc/pipelining/) on CPUs) to ensure that communication and compute is happening simultaneously.
+The DeepSeek team made three improvements compared to HC to achieve this small overhead: 1) manual kernel fusion to compute $\mathcal{H}_l$ matrices, 2) reducing the memory overhead by discarding the intermediate activations of the mHC kernels after the forward pass and then recomputing them on the backwards pass, and 3) using pipeline parallelism (like [instruction pipelining](https://en.algorithmica.org/hpc/pipelining/) on CPUs) to ensure that communication and compute are happening simultaneously.
 
 See [this blog post](https://www.k-a.in/mHC.html) for a detailed breakdown of the performance improvements.
 
 
 ## Summary
 
-The DeepSeek team improved the usability of Hyper-Connections architectures by make their training (aka pretraining for some) more stable and efficient.
+The DeepSeek team improved the usability of Hyper-Connections architectures by making their training (aka pretraining for some) more stable and efficient.
 The Hyper-Connections architecture already showed better benchmark performance than vanilla residual connections and Manifold-Constrained Hyper-Connections performs better than *both* on 7/8 benchmarks discussed in the paper.
-Thinking about constraints for components of our networks isn't new, but it seems to be gaining momentum in the community and offers an exciting avenue of research as scientists connect the underlying mathematical structure of the models to the models trainability and capability.
+Thinking about constraints for components of our networks isn't new, but it seems to be gaining momentum in the community and offers an exciting avenue of research as scientists connect the underlying mathematical structure of the models to the models' trainability and capability.
