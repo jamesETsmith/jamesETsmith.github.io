@@ -100,6 +100,15 @@ Eventually realized that this wasn't strictly necessary, so I set up all my mach
 To set them up, all you need to do is run the following on the command line (if you're on their website you can follow the links to "add node" and it will generate the full command for your account with the appropriate tokens):</p>
 <pre class="codehilite"><code class="language-bash">wget -O /tmp/netdata-kickstart.sh https://get.netdata.cloud/kickstart.sh &amp;&amp; sh /tmp/netdata-kickstart.sh --nightly-channel --claim-token &lt;YOUR_CLAIM_TOKEN_&gt;--claim-rooms &lt;CLAIM_ROOM_UUID_&gt; --claim-url https://app.netdata.cloud
 </code></pre>
+
+<p>Here's what the UI looks like:</p>
+<p><img src="/images/netdata_ui.png" alt="Netdata ui" style="max-width:100%; height:auto;" /></p>
+<p>When monitoring a single machine, the defaults were great and I didn't have to change anything.
+After I set up several of the machines in the cluster, I did opt to create several aggregate metrics in the UI so I didn't have to flip between the tabs for each machine.
+It was a little cumbersome to setup to aggregate metrics across the machines because I was overwhelmed with all of the options for the metrics, but it didn't take too long to set it up.</p>
+<h1>Conclusion</h1>
+<p>Netdata was easy to setup and it has great default metrics.
+I'd recommend it for any home setup whether you're running slurm-like jobs or openclaw 🦞 projects, it's a great way to keep track of your resources and usage.</p>
                 </section>
             </article>
 

@@ -33,3 +33,15 @@ To set them up, all you need to do is run the following on the command line (if 
 wget -O /tmp/netdata-kickstart.sh https://get.netdata.cloud/kickstart.sh && sh /tmp/netdata-kickstart.sh --nightly-channel --claim-token <YOUR_CLAIM_TOKEN_>--claim-rooms <CLAIM_ROOM_UUID_> --claim-url https://app.netdata.cloud
 ```
 
+Here's what the UI looks like:
+
+<img src="/images/netdata_ui.png" alt="Netdata ui" style="max-width:100%; height:auto;" />
+
+When monitoring a single machine, the defaults were great and I didn't have to change anything.
+After I set up several of the machines in the cluster, I did opt to create several aggregate metrics in the UI so I didn't have to flip between the tabs for each machine.
+It was a little cumbersome to setup to aggregate metrics across the machines because I was overwhelmed with all of the options for the metrics, but it didn't take too long to set it up.
+
+# Conclusion
+
+Netdata was easy to setup and it has great default metrics.
+I'd recommend it for any home setup whether you're running slurm-like jobs or openclaw 🦞 projects, it's a great way to keep track of your resources and usage.
