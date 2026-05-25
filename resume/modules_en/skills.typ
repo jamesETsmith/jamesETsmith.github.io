@@ -14,5 +14,5 @@
 
 #cvSkill(
   type: [Tools],
-  info: ("git" , "perf" , "VTune" , "rocprofv3", "GitHub Actions")
+  info: ("git" , "perf" , "VTune" , "rocprofv3", "Slurm", "Cursor", "Crush")
 )

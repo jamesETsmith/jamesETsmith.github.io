@@ -10,12 +10,11 @@
   location: [Remote],
   description: list(
     [Ported Deep Graph Library (DGL), a graph ML framework, from CUDA to ROCm for AMD datacenter GPUs.],
-    [Accelerated ROCm ports of Quadrants and Genesis 3D physics libraries by 3x on AMD datacenter GPUs.],
-    [Improved the Quadrants JIT compiler using MFMA and warp-level reductions.],
+    [Accelerated ROCm ports of Quadrants and Genesis 3D physics libraries by 3x on AMD datacenter GPUs by improving the Quadrants JIT/LLVM pipeline to tag pointers with the correct AMDGPU address space, enabling faster global and shared-memory load/store paths.],
     [Tuned GEMM and kernel performance for Kimi K2.5 with ROCm's AITER library.],
     [Implemented the Step3.5 Flash model in ROCm's ATOM inference engine with 20-60% faster performance than vLLM across different server configurations.]
   ),
-  tags: ("C++", "PyTorch", "ROCm", "HIP", "Optimization", "Inference", "vLLM", "ATOM")
+  tags: ("C++", "Python", "PyTorch", "ROCm", "HIP", "GPU", "Optimization", "Inference", "vLLM", "ATOM")
 )
 
 #cvEntry(
