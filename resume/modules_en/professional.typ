@@ -3,10 +3,26 @@
 #cvSection("Professional Experience")
 
 #cvEntry(
+  title: [Member of the Technical Staff],
+  society: [AMD],
+  logo: "",
+  date: [Jun. 2025 - Present],
+  location: [Remote],
+  description: list(
+    [Ported Deep Graph Library (DGL), a graph ML framework, from CUDA to ROCm for AMD datacenter GPUs.],
+    [Accelerated ROCm ports of Quadrants and Genesis 3D physics libraries by 3x on AMD datacenter GPUs.],
+    [Improved the Quadrants JIT compiler using MFMA and warp-level reductions.],
+    [Tuned GEMM and kernel performance for Kimi K2.5 with ROCm's AITER library.],
+    [Implemented the Step3.5 Flash model in ROCm's ATOM inference engine with TODO faster performance than vLLM.]
+  ),
+  tags: ("C++", "PyTorch", "ROCm", "HIP", "Optimization", "Inference", "vLLM", "ATOM")
+)
+
+#cvEntry(
   title: [Senior Research Engineer],
   society: [Qognitive Inc.],
   logo: "",
-  date:[Jan. 2024-Present],
+  date:[Jan. 2024-Jun. 2025],
   location: [New York, NY],
   description: list(
     [Engineering team lead after the departure of the CTO. Managed a team of 5 engineers across Machine Learning Engineering, Infrastructure, and Research.],

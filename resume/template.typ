@@ -4,8 +4,7 @@
 
 /* Packages */
 #import "metadata.typ": *
-#import "@preview/fontawesome:0.1.0": *
-
+#import "@preview/fontawesome:0.6.0": *
 
 /* Language-specific Macros */
 #let nonLatinOverwrite = false
@@ -47,9 +46,13 @@
 
 
 /* Styles */
-#let fontList = ("Source Sans Pro", nonLatinFont, "Font Awesome 6 Brands", "Font Awesome 6 Free")
+#let fontList = if nonLatinFont != "" {
+  ("Source Sans Pro", nonLatinFont, "Font Awesome 6 Brands", "Font Awesome 6 Free")
+} else {
+  ("Source Sans Pro", "Font Awesome 6 Brands", "Font Awesome 6 Free")
+}
 
-#let headerFont = ("Roboto", nonLatinFont)
+#let headerFont = if nonLatinFont != "" { ("Roboto", nonLatinFont) } else { "Roboto" }
 
 #let awesomeColors = (
   skyblue: rgb("#0395DE"),
@@ -522,6 +525,7 @@
 
 /* Layout */
 #let layout(doc) = {
+  fa-version("6")
   set text(
     font: fontList,
     weight: "regular",
