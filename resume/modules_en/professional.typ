@@ -13,7 +13,7 @@
     [Accelerated ROCm ports of Quadrants and Genesis 3D physics libraries by 3x on AMD datacenter GPUs.],
     [Improved the Quadrants JIT compiler using MFMA and warp-level reductions.],
     [Tuned GEMM and kernel performance for Kimi K2.5 with ROCm's AITER library.],
-    [Implemented the Step3.5 Flash model in ROCm's ATOM inference engine with TODO faster performance than vLLM.]
+    [Implemented the Step3.5 Flash model in ROCm's ATOM inference engine with 20-60% faster performance than vLLM across different server configurations.]
   ),
   tags: ("C++", "PyTorch", "ROCm", "HIP", "Optimization", "Inference", "vLLM", "ATOM")
 )
